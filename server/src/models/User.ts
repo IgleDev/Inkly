@@ -22,7 +22,7 @@ export const UserSchema = new Schema ({
         type : Number,
         require : true
     }
-});
+}, { timestamps : true });
 
 const User = mongoose.model<tUserClass>('User', UserSchema);
 export default User;
