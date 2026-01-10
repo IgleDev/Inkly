@@ -7,7 +7,7 @@ import { createAccount } from "@/api/AuthAPI";
 
 export default function RegisterForm() {
 
-  const initialValues: iUserForm = { userName: "", secondName: "", email: "", password: "", reg: 0 };
+  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: 0 };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
 
@@ -28,17 +28,17 @@ export default function RegisterForm() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-white" htmlFor="userName">Nombre</label>
+            <label className="text-lg font-semibold text-white" htmlFor="name">Nombre</label>
             <input
-              id="userName"
+              id="name"
               type="text"
               placeholder="Juan Pérez"
               className="duo-input"
-              {...register("userName", {
+              {...register("name", {
                 required: "El Nombre es obligatorio",
               })}
             />
-            {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
+            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
           </div>
 
           <div className="flex flex-col gap-2">
