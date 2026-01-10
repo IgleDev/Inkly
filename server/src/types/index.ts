@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export type tUserClass = Document & {
-    userName : string,
+    name : string,
     secondName : string,
     email : string,
     password : string,
