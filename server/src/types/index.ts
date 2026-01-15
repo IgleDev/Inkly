@@ -5,6 +5,6 @@ export type tUserClass = Document & {
     secondName : string,
     email : string,
     password : string,
-    reg : number,
+    reg : string,
     // blogs
 }
