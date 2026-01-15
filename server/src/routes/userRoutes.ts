@@ -24,7 +24,7 @@ router.post('/',
     body('secondName').isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),
     body('email').isEmail().withMessage('El email no tiene un formato correcto').notEmpty().withMessage('No puede estar vacio').trim(),
     body('password').isLength({min : 8}).withMessage('Mínimo 8 caracteres').notEmpty().withMessage('No puede estar vacia').trim(),
-    body('reg').isNumeric().withMessage('No puede ser una cadena de texto').notEmpty().withMessage('No puede estar vacio'),
+    body('reg').isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),
     handleInputErrors,
     UserController.createUser
 )

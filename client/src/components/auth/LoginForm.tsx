@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import type { iUserFormLogin } from "@/types/types";
 import ErrorMessage from "../ErrorMessage";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AUTH_TOKEN } from "@/config/config";
 import { loginAccount } from "@/api/AuthAPI";
+import type { iUserFormLogin } from "@/types/types";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function LoginForm() {
 
@@ -20,7 +21,7 @@ export default function LoginForm() {
     onError : (error) => (console.log(error)),
     onSuccess : (data) => { 
       reset(); 
-      localStorage.setItem('AUTH_TOKEN', data!);
+      localStorage.setItem(AUTH_TOKEN, data!);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       navigate('/')
     }

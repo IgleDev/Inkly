@@ -1,0 +1,27 @@
+[
+    {
+        "value" : "es",
+        "name" : "España",
+        "flag" : "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/es.svg"
+    },
+    {
+        "value" : "fr",
+        "name" : "Francia",
+        "flag" : "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/fr.svg"
+    },
+    {
+        "value" : "it",
+        "name" : "Italia",
+        "flag" : "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/it.svg"
+    },
+    {
+        "value" : "pt",
+        "name" : "Portugal",
+        "flag" : "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/pt.svg"
+    },
+    {
+        "value" : "eng",
+        "name" : "Inglaterra",
+        "flag" : "https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/gb-eng.svg"
+    }
+]

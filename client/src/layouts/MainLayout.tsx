@@ -14,7 +14,7 @@ export default function MainLayout() {
   return (
     <>
       <header>
-        {data.name}
+        {data?.name}
       </header>
       <main className="min-h-screen bg-orange-400 flex items-center justify-center">
 

@@ -5,5 +5,5 @@ export const userSchema = z.object({
     secondName : z.string(),
     email : z.string(),
     password : z.string(),
-    reg : z.number(),
+    reg : z.string(),
 })

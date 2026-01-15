@@ -20,7 +20,7 @@ export const UserSchema = new Schema ({
         require : true,
     },
     reg : {
-        type : Number,
+        type : String,
         require : true
     }
 }, { timestamps : true });
