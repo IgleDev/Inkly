@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth"
 import { Navigate } from "react-router-dom";
+import RegView from "./RegView";
 
 
 export default function Home() {
@@ -11,7 +12,13 @@ export default function Home() {
         return <Navigate to="/auth/login" />
     } 
 
-    if(user) return (
-        <div>{user.name}</div>
+    return (
+        <>
+            { user ? (
+                <p>{user.name}</p>
+            ) : (
+                <RegView />
+            )}
+        </>
     )
 }

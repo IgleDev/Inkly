@@ -1,8 +1,9 @@
 import { getUser } from "@/api/AuthAPI";
+import { AUTH_TOKEN } from "@/config/config";
 import { useQuery } from "@tanstack/react-query";
 
 export const useAuth = () => {
-    const token = localStorage.getItem('AUTH_TOKEN');
+    const token = localStorage.getItem(AUTH_TOKEN);
     const { data, isError, isLoading } = useQuery({
         queryKey : ['user'],
         queryFn : getUser,
