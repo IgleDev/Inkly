@@ -17,10 +17,9 @@ export default function Home() {
 
     return (
         <>  
-            <nav className="flex justify-between pt-6 p-4">
+            <nav className="flex justify-between pt-10 p-4">
                 <div>
-                    {/* Falta Configurar */}
-                    <p>{user?.name}</p>
+                    <p className="text-2xl font-bold">{user?.name}</p>
                 </div>
                 <div>
                     <Link to={user ? '/' : '#'}  className="`mt-2 px-10 py-5 rounded-full font-extrabold text-lg uppercase 

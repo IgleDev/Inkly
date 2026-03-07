@@ -11,7 +11,7 @@ export default function MainLayout() {
 
   return (
     <>
-      <main className="min-h-screen bg-orange-400">
+      <main className="min-h-screen bg-[#F6F4F0]">
         <Outlet />
       </main>
     </>
