@@ -23,7 +23,7 @@ export default function Home() {
                     {user?.name && <p className="text-3xl font-bold">Bienvenido <span className="text-[#C53F56]">{user.name}</span></p>}
                 </div>
                 <div>
-                    <Button url={user ? '/create-blog' : '#'} text="Crear Blog" />
+                    <Button url={user ? '/new/create-blog' : '#'} text="Crear Blog" />
                 </div>
             </nav>
         </>
