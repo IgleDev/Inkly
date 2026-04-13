@@ -14,7 +14,15 @@ export type iRegionSelect = {
 }
 
 // Block
-type tBlockType = 'paragraph' | 'heading' | 'image' | 'video' | 'quote';
+export const BLOCK_TYPES = {
+    HEADING: 'heading',
+    PARAGRAPH: 'paragraph',
+    IMAGE: 'image',
+    VIDEO: 'video',
+    QUOTE: 'quote'
+} as const;
+
+export type tBlockType = typeof BLOCK_TYPES[keyof typeof BLOCK_TYPES];
 export interface iBlockSelect {
     type : tBlockType,
     value : string, // Texto, URL, etc...
@@ -22,9 +30,9 @@ export interface iBlockSelect {
 }
 
 export const BlockSelection: { [key: string]: string } = {
-    HEADING: 'Título',
-    PARAGRAPH: 'Párrafo',
-    IMAGE: 'Imagen',
-    VIDEO: 'Video',
-    QUOTE: 'Cita'
+    heading: 'Título',
+    paragraph: 'Párrafo',
+    image: 'Imagen',
+    video: 'Video',
+    quote: 'Cita'
 };
