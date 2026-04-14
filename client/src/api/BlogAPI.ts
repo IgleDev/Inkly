@@ -32,5 +32,4 @@ export async function getAllBlogs() {
             throw new Error(error.response.data.error);
         }
     }
-    
 }
