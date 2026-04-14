@@ -4,7 +4,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/re
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useAppStore } from "@/stores/useAppStore";
 import { useState } from "react";
-import { BLOCK_TYPES } from "@/types/types";
+import { BLOCK_TYPES } from "@/types/helperTypes";
 
 export default function OptionsModalBlock() {
     const [inputValue, setInputValue] = useState('');

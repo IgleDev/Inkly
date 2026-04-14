@@ -1,5 +1,5 @@
 import { useAppStore } from "@/stores/useAppStore"
-import { BLOCK_TYPES, type iBlockSelect } from "@/types/types"
+import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes"
 
 interface iBlockEditorProps {
     block : iBlockSelect

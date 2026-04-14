@@ -1,10 +1,12 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
-import { handleInputErrors } from "../middleware/validate";
 import { body } from "express-validator";
 import { authenticate } from "../middleware/authenticate";
+import { handleInputErrors } from "../middleware/validate";
+import { UserController } from "../controllers/UserController";
 
 const router = Router();
+
+// * TEST
 
 router.get('/test', (req, res) => {
     res.send('Test')

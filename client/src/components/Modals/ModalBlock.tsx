@@ -1,9 +1,10 @@
 "use client";
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { BlockSelection, type tBlockType } from "@/types/types";
+import { type tBlockType } from "@/types/types";
 import { useAppStore } from "@/stores/useAppStore";
+import { BlockSelection } from "@/types/helperTypes";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export default function ModalBlock() {
     const modal = useAppStore(state => state.modal);

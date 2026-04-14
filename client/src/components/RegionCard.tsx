@@ -1,4 +1,4 @@
-import type { iRegionSelect } from "@/types/types"
+import type { iRegionSelect } from "@/types/helperTypes"
 
 interface iRegionCardProps {
   reg : iRegionSelect,

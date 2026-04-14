@@ -1,7 +1,7 @@
 import RegionCard from "@/components/RegionCard";
 import { REGION_STORAGE_KEY } from "@/config/config"
 import regsJSON from "@/json/countries.json"
-import type { iRegionSelect } from "@/types/types"
+import type { iRegionSelect } from "@/types/helperTypes"
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

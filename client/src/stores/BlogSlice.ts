@@ -1,7 +1,11 @@
-import type { iBlockSelect, tBlockType } from "@/types/types";
+import type { iBlogPresentation, tBlockType } from "@/types/types";
+import type { iBlockSelect } from '@/types/helperTypes';
 import type { StateCreator } from "zustand";
 
 export interface iBlogState {
+    blogDraft: iBlogPresentation,
+    updateTitleBlock: (value: string) => void;
+    updateDescription: (desc: string) => void,
     blocks : iBlockSelect[],
     selectedBlock : tBlockType | null,
     selectRadioBlock : (blockType : tBlockType) => void,
@@ -16,6 +20,19 @@ export interface iBlogState {
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
+    blogDraft: { title : '', description : ''},
+    updateTitleBlock: (value: string) => {
+        set((state) => ({
+            blocks: state.blocks.map(block => 
+                block.type === 'heading' ? { ...block, value } : block
+            )
+        }));
+    },
+    updateDescription: (desc: string) => {
+        set((state) => ({
+            blogDraft: { ...state.blogDraft, description: desc }
+        }));
+    },
     blocks : [],
     selectedBlock : null,
     selectRadioBlock: (blockType: tBlockType) => {
@@ -47,5 +64,5 @@ export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
     closeModal : () => set({modal : false}),
     modalUpload : false,
     openModalUpload : () => set({modalUpload : true}),
-    closeModalUpload : () => set({modalUpload : false, selectedBlock : null})
+    closeModalUpload : () => set({modalUpload : false, selectedBlock : null}),
 });
