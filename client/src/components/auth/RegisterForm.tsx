@@ -7,7 +7,7 @@ import { createAccount } from "@/api/AuthAPI";
 
 export default function RegisterForm() {
 
-  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: 0 };
+  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: '' };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
 

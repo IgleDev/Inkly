@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import LoginView from "./pages/auth/LoginView";
 import Home from "./pages/Home";
 import RegView from "./pages/RegView";
+import CreateBlogView from "./pages/blog/CreateBlogView";
 
 export default function Router() {
     return (
@@ -17,6 +18,7 @@ export default function Router() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} index></Route>
                     <Route path="/select-region" element={<RegView />}></Route>
+                    <Route path="/new/create-blog" element={<CreateBlogView />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

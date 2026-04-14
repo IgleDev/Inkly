@@ -2,14 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import { tBlogClass, tPostClass } from "../types";
 
 export const PostSchema = new Schema ({
-    title : {
-        type : String,
-        required : true
-    },
     blocks:  [
         {
           type:  { type: String, enum: ['paragraph', 'heading', 'image', 'video', 'quote'], required: true },
-          value: { type: String, required: true },
+          value: { type: Schema.Types.Mixed, required: true },
           order: { type: Number, required: true }
         }
     ],
@@ -28,4 +24,5 @@ export const PostSchema = new Schema ({
     },
 }, { timestamps : true });
 
-const Post = mongoose.model<tPostClass>('Post', PostSchema)
+const Post = mongoose.model<tPostClass>('Post', PostSchema);
+export default Post;
