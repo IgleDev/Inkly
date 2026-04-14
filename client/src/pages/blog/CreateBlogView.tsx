@@ -1,3 +1,4 @@
+import { getRegion } from "@/helper";
 import { createBlog } from "@/api/BlogAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +11,7 @@ import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function CreateBlogView() {
-
     const navigate = useNavigate();
-
     const handleBack = () => {
         navigate(-1);
     }
@@ -39,7 +38,7 @@ export default function CreateBlogView() {
             title : headingBlock?.value || 'Mi primer blog',
             description : blogDraft.description ?? '',
             published,
-            reg : "ES",
+            reg : getRegion()?.value,
             post : {
                 blocks : blocks.map(block => ({
                     type : block.type,
@@ -51,7 +50,6 @@ export default function CreateBlogView() {
         };
         mutate(formData);
     }
-
 
     return (
         <main>
