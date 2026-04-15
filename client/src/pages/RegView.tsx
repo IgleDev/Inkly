@@ -1,22 +1,17 @@
 import RegionCard from "@/components/RegionCard";
-import { REGION_STORAGE_KEY } from "@/config/config"
 import regsJSON from "@/json/countries.json"
+import { useAppStore } from "@/stores/useAppStore";
 import type { iRegionSelect } from "@/types/helperTypes"
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function RegView() {
-    const [selectedReg, setSelectedReg] = useState<iRegionSelect>(() => {
-        const stored = localStorage.getItem(REGION_STORAGE_KEY);
-        return stored ? JSON.parse(stored) : null
-    });
-
     const regs = regsJSON as iRegionSelect[];
+    const selectedReg = useAppStore(state => state.regSelect);
+    const updateRegSelect = useAppStore(state => state.updateRegSelect);
 
-    const handleSelectReg = (reg : iRegionSelect) => {
-        setSelectedReg(reg);
-        localStorage.setItem(REGION_STORAGE_KEY, JSON.stringify(reg));
-    }
+    const handleSelectReg = (reg: iRegionSelect) => {
+        updateRegSelect(reg);
+    };
 
     return (
         <main className="mx-auto max-w-5xl relative">
@@ -31,7 +26,7 @@ export default function RegView() {
                 <h1 className="text-center text-gray-700 text-5xl font-black">Elige una Región 🌍</h1>
                 <div className="mt-10 grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-1">
                     {regs.map((reg) => (
-                        <RegionCard key={reg.value} reg={reg} handleSelectReg={handleSelectReg}  isSelected={selectedReg?.value === reg.value}/>
+                        <RegionCard key={reg.value} reg={reg} handleSelectReg={handleSelectReg} isSelected={selectedReg?.value === reg.value}/>
                     ))}
                 </div>
             </div>
