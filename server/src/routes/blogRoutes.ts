@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { body } from "express-validator";
+import { body, query } from "express-validator";
+import { authenticate } from "../middleware/authenticate";
 import { handleInputErrors } from "../middleware/validate";
 import { BlogController } from "../controllers/BlogController";
-import { authenticate } from "../middleware/authenticate";
 
 const router = Router();
 
@@ -14,7 +14,10 @@ router.get('/test', (req, res) => {
 
 // * GET
 
-router.get('/', BlogController.getAllBlogs);
+router.get('/',
+    query('reg').notEmpty().withMessage('La región es obligatoria'),
+    BlogController.getAllBlogs
+);
 
 // * POST
 

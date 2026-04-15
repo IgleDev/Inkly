@@ -18,10 +18,12 @@ export async function createBlog(formData : iBlogFormData) {
     }
 }
 
-export async function getAllBlogs() {
+export async function getAllBlogs(reg : string) {
     try {
         const url = '/blog/';
-        const { data } = await api.get(url);
+        const { data } = await api.get(url, {
+            params : { reg }
+        });
         
         if(!data) {
             throw new Error('No se han podido obtener los blogs');
