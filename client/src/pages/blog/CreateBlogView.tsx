@@ -8,8 +8,10 @@ import TitleBlog from "@/components/blog/TitleBlog";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useReg } from "@/hooks/useReg";
 
 export default function CreateBlogView() {
+    const { value } = useReg();
 
     const navigate = useNavigate();
 
@@ -17,11 +19,10 @@ export default function CreateBlogView() {
         navigate(-1);
     }
 
-    const queryClient = useQueryClient();
-
     const blogDraft = useAppStore(state => state.blogDraft);
     const blocks = useAppStore(state => state.blocks);
-
+    
+    const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn : createBlog,
         onSuccess : () => { 
@@ -40,7 +41,7 @@ export default function CreateBlogView() {
             title : headingBlock?.value || 'Mi primer blog',
             description : blogDraft.description ?? '',
             published,
-            reg : "ES",
+            reg : value,
             post : {
                 blocks : blocks.map(block => ({
                     type : block.type,

@@ -6,15 +6,17 @@ import { useQuery } from "@tanstack/react-query";
 import { REGION_STORAGE_KEY } from "@/config/config";
 import type { iBlogPresentation } from "@/types/types";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
+import { useReg } from "@/hooks/useReg";
 
 export default function Home() {
     const { data : user, isError, isLoading : authLoading } = useAuth();
+    const { value, name } = useReg();
 
     const hasRegion = !!localStorage.getItem(REGION_STORAGE_KEY);
 
     const { data : blogs } = useQuery({
         queryKey: ['blogs'],
-        queryFn : getAllBlogs,
+        queryFn : () => getAllBlogs(value),
         enabled : hasRegion
     });
 
@@ -38,7 +40,7 @@ export default function Home() {
                 </div>
             </nav>
             <main>
-                <h1 className="text-center text-4xl my-5 font-bold">Los post <span className="text-[#C53F56]">más populares</span> de {hasRegion}</h1>
+                <h1 className="text-center text-4xl my-5 font-bold">Los post <span className="text-[#C53F56]">más populares</span> de <span className="text-[#C53F56] uppercase">{name}</span></h1>
                 <section className="flex flex-row justify-start w-full p-5">
                     {blogs?.blogs?.map((blog: iBlogPresentation, index : number) => (
                         <BlogResumeCard key={index} blog={blog} />

@@ -38,7 +38,8 @@ export class BlogController {
 
     public static async getAllBlogs(req : Request, res : Response) {
         try {
-            const blogs = await Blog.find({})
+            const reg = (req.query.reg as string)?.trim().toLowerCase();  
+            const blogs = await Blog.find({ published : true, reg : reg});
             res.json({blogs})
         } catch (error) {
             res.status(500).json({error : 'Error al obtener los blogs'})
