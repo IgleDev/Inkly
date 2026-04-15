@@ -34,5 +34,4 @@ export async function getAllBlogs(reg : string) {
             throw new Error(error.response.data.error);
         }
     }
-    
 }

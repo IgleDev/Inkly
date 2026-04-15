@@ -9,7 +9,7 @@ export class BlogController {
         session.startTransaction();
 
         try {
-            const { title, description, post } = req.body;
+            const { title, description, published, reg, post } = req.body;
             const userId = req.user?._id;
 
             if(!userId) {
@@ -17,7 +17,13 @@ export class BlogController {
                 return res.status(401).json({ error : error.message });
             }
 
-            const blog = new Blog({title, description, owner : userId})
+            const blog = new Blog({ 
+                title, 
+                description, 
+                owner : userId, 
+                published, 
+                reg 
+            })
             await blog.save({ session });
 
             const newPost = new Post({

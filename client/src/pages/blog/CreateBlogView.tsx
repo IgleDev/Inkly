@@ -1,3 +1,4 @@
+import { getRegion } from "@/helper";
 import { createBlog } from "@/api/BlogAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,6 @@ export default function CreateBlogView() {
     const { value } = useReg();
 
     const navigate = useNavigate();
-
     const handleBack = () => {
         navigate(-1);
     }
@@ -26,7 +26,6 @@ export default function CreateBlogView() {
     const { mutate, isPending } = useMutation({
         mutationFn : createBlog,
         onSuccess : () => { 
-            console.log('Blog creado con éxito');
             queryClient.invalidateQueries({ queryKey : ['blogs']});
             navigate('/');
         },
@@ -54,7 +53,6 @@ export default function CreateBlogView() {
         mutate(formData);
     }
 
-
     return (
         <main>
             <button onClick={handleBack} className="text-sm text-gray-500 hover:text-[#C53F56] transition-colors mb-4 p-5"><ArrowLeftIcon /> Volver</button>
@@ -70,10 +68,14 @@ export default function CreateBlogView() {
                             <DescriptionBlog />
                             <TeamBlog team={["Adrián Iglesias", "Anxo Rodriguez", "Claudia Casal"]} />
                             <TagBlog tags={["Tag 1", "Tag 2", "Tag 3"]} />
-                            <div>
+                            <div className="flex gap-4">
                                 <button onClick={() => handlePublish(true)} disabled={isPending} 
                                     className="bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
                                     {isPending ? 'Publicando...' : 'Publicar'}
+                                </button>
+                                <button onClick={() => handlePublish(false)} disabled={isPending} 
+                                    className="bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
+                                    {isPending ? 'Guardando...' : 'Guardar'}
                                 </button>
                             </div>
                         </div>
