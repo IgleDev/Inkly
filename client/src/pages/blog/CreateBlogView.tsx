@@ -1,4 +1,3 @@
-import { getRegion } from "@/helper";
 import { createBlog } from "@/api/BlogAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import { useNavigate } from "react-router-dom";
@@ -9,11 +8,8 @@ import TitleBlog from "@/components/blog/TitleBlog";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useReg } from "@/hooks/useReg";
 
 export default function CreateBlogView() {
-    const { value } = useReg();
-
     const navigate = useNavigate();
     const handleBack = () => {
         navigate(-1);
@@ -21,6 +17,7 @@ export default function CreateBlogView() {
 
     const blogDraft = useAppStore(state => state.blogDraft);
     const blocks = useAppStore(state => state.blocks);
+    const reg = useAppStore(state => state.regSelect);
     
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
@@ -40,7 +37,7 @@ export default function CreateBlogView() {
             title : headingBlock?.value || 'Mi primer blog',
             description : blogDraft.description ?? '',
             published,
-            reg : value,
+            reg : reg.value,
             post : {
                 blocks : blocks.map(block => ({
                     type : block.type,
