@@ -5,16 +5,13 @@ import TagBlog from "@/components/blog/TagBlog";
 import TeamBlog from "@/components/blog/TeamBlog";
 import { useAppStore } from "@/stores/useAppStore";
 import TitleBlog from "@/components/blog/TitleBlog";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import CreateModalBlock from "@/components/Modals/CreateModalBlock";
 
 export default function CreateBlogView() {
     const navigate = useNavigate();
-    const handleBack = () => {
-        navigate(-1);
-    }
-
+    
     const blogDraft = useAppStore(state => state.blogDraft);
     const blocks = useAppStore(state => state.blocks);
     const reg = useAppStore(state => state.regSelect);
@@ -52,7 +49,7 @@ export default function CreateBlogView() {
 
     return (
         <main>
-            <button onClick={handleBack} className="text-sm text-gray-500 hover:text-[#C53F56] transition-colors mb-4 p-5"><ArrowLeftIcon /> Volver</button>
+            <CreateModalBlock />
             <div className='max-w-5xl mx-auto pt-5'>
                 <h2 className='text-4xl font-bold text-left'>Crea tu <span className='text-[#1f387f]'>propio blog</span></h2>
                 <section className="grid grid-cols-12 mt-5 gap-10">
