@@ -17,6 +17,9 @@ export interface iBlogState {
     modalUpload: boolean,
     openModalUpload: () => void,
     closeModalUpload: () => void,
+    modalBack : boolean,
+    openModalBack : () => void,
+    closeModalBack : () => void
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
@@ -65,4 +68,7 @@ export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
     modalUpload : false,
     openModalUpload : () => set({modalUpload : true}),
     closeModalUpload : () => set({modalUpload : false, selectedBlock : null}),
+    modalBack : false,
+    openModalBack : () => set({ modalBack : true }),
+    closeModalBack : () => set({ modalBack : false, blocks : [], blogDraft : { title : '', description : ''} })
 });
