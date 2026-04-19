@@ -15,6 +15,7 @@ export default function CreateBlogView() {
     const blogDraft = useAppStore(state => state.blogDraft);
     const blocks = useAppStore(state => state.blocks);
     const reg = useAppStore(state => state.regSelect);
+    const tags = useAppStore(state => state.tags);
     
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
@@ -41,7 +42,7 @@ export default function CreateBlogView() {
                     value : block.value,
                     order : block.order
                 })),
-                tags : [] as string[]
+                tags : tags
             }
         };
         mutate(formData);
@@ -61,7 +62,7 @@ export default function CreateBlogView() {
                             <TitleBlog />
                             <DescriptionBlog />
                             <TeamBlog team={["Adrián Iglesias", "Anxo Rodriguez", "Claudia Casal"]} />
-                            <TagBlog tags={["Tag 1", "Tag 2", "Tag 3"]} />
+                            <TagBlog />
                             <div className="flex gap-4">
                                 <button onClick={() => handlePublish(true)} disabled={isPending} 
                                     className="bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
