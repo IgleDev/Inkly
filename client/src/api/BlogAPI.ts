@@ -2,6 +2,12 @@ import api from "@/lib";
 import type { iBlogFormData } from "@/types/helperTypes";
 import { isAxiosError } from "axios";
 
+const axiosError = (error : unknown) => {
+    if(isAxiosError(error) && error.response) {
+        throw new Error(error.response.data.error);
+    }
+}
+
 export async function createBlog(formData : iBlogFormData) {
     try {
         const url = '/blog/create';
@@ -12,9 +18,7 @@ export async function createBlog(formData : iBlogFormData) {
         }
         return data;
     } catch (error) {
-        if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error);
-        }
+       axiosError(error);
     }
 }
 
@@ -30,8 +34,18 @@ export async function getAllBlogs(reg : string) {
         }
         return data;
     } catch (error) {
-        if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error);
-        }
+        axiosError(error);
+    }
+}
+
+export async function getBlogsByTags(reg : string, tag : string) {
+    try {
+        const url = '/blog/filter-by-tags';
+        const { data } = await api.get(url, {
+            params : { reg, tag }
+        })
+        return data;
+    } catch (error) {
+        axiosError(error);
     }
 }

@@ -9,6 +9,9 @@ export const BlogSchema = new Schema ({
     description : {
         type : String,
     },
+    tags : [{
+        type : String
+    }],
     owner : {
         type : Schema.Types.ObjectId,
         required : true,

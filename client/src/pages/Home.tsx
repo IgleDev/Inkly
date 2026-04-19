@@ -1,25 +1,32 @@
-import { useAuth } from "@/hooks/useAuth"
-import { getAllBlogs } from "@/api/BlogAPI";
+import { useAuth } from "@/hooks/useAuth";
+import { getAllBlogs, getBlogsByTags } from "@/api/BlogAPI";
 import { Navigate } from "react-router-dom";
+import countries from '@/json/countries.json';
 import Button from "@/components/utils/Button";
 import { useQuery } from "@tanstack/react-query";
+import { useAppStore } from "@/stores/useAppStore";
 import type { iBlogPresentation } from "@/types/types";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
-import countries from '@/json/countries.json'
-import { useAppStore } from "@/stores/useAppStore";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 export default function Home() {
     const { data : user, isError, isLoading : authLoading } = useAuth();
 
+    const [tag, setTag] = useState('');
     const regSelect = useAppStore(state => state.regSelect);
     const regFilter = useAppStore(state => state.regFilter);
     const updateRegFilter = useAppStore(state => state.updateRegFilter);
     const activeRegion = regFilter.value ? regFilter : regSelect;
-    console.log(activeRegion)
 
     const { data : blogs } = useQuery({
-        queryKey: ['blogs', activeRegion.value],
-        queryFn : () => getAllBlogs(activeRegion.value),
+        queryKey: ['blogs', activeRegion.value, tag],
+        queryFn : () => {
+            if(tag) {
+                return getBlogsByTags(activeRegion.value!, tag);
+            }
+            return getAllBlogs(activeRegion.value!);
+        },
         enabled : !!activeRegion.value
     });
 
@@ -43,18 +50,25 @@ export default function Home() {
             </nav>
             <main>
                 <h1 className="text-center text-4xl my-5 font-bold">Los post <span className="text-[#C53F56]">más populares</span> de <span className="text-[#C53F56] uppercase">{activeRegion.name}</span></h1>
-                <div className="flex justify-center items-center mt-10">
-                    <label className="text-xl font-bold mx-2" htmlFor="">Estas filtrando blogs sobre</label>
-                    <select value={regFilter.value || regSelect.value} 
-                        onChange={(e) => {
-                            const selected = countries.find(c => c.value === e.target.value);
-                            if (selected) { updateRegFilter(selected); }
-                        }}
-                        className="p-2 bg-transparent border-2 border-[#C53F56] rounded-xl">
-                        {countries.map((reg) => (
-                            <option key={reg.name} value={reg.value}>{reg.name}</option>
-                        ))}
-                    </select>
+                <div className="flex flex-col justify-center items-center mt-10">
+                    <div>
+                        <label className="text-xl font-bold mx-2" htmlFor="">Estas filtrando blogs sobre</label>
+                        <select value={regFilter.value || regSelect.value} 
+                            onChange={(e) => {
+                                const selected = countries.find(c => c.value === e.target.value);
+                                if (selected) { updateRegFilter(selected); }
+                            }}
+                            className="p-2 bg-transparent border-2 border-[#C53F56] rounded-xl">
+                            {countries.map((reg) => (
+                                <option key={reg.name} value={reg.value}>{reg.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="flex items-center w-2/6 mt-10 gap-2">
+                        <input type="text" placeholder="Filtrar por temas..." className="flex-1 p-3 rounded-full border border-[#C53F56] outline-none" value={tag}
+                        onChange={(e) => setTag(e.target.value)} />
+                        <button className="p-3 rounded-full border bg-[#C53F56] text-white flex items-center justify-center"><MagnifyingGlassIcon className="w-6 h-6" /></button>
+                    </div>
                 </div>
                 <section className="flex flex-row justify-start w-full p-5">
                     {blogs?.blogs?.map((blog: iBlogPresentation, index : number) => (

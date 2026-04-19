@@ -9,7 +9,7 @@ export class BlogController {
         session.startTransaction();
 
         try {
-            const { title, description, published, reg, post } = req.body;
+            const { title, description, tags, published, reg, post } = req.body;
             const userId = req.user?._id;
 
             if(!userId) {
@@ -20,6 +20,7 @@ export class BlogController {
             const blog = new Blog({ 
                 title, 
                 description, 
+                tags,
                 owner : userId, 
                 published, 
                 reg 
@@ -28,7 +29,6 @@ export class BlogController {
 
             const newPost = new Post({
                 blocks : post.blocks,
-                tags : post.tags,
                 blog : blog._id,
                 author : userId
             })
@@ -47,6 +47,21 @@ export class BlogController {
             const reg = (req.query.reg as string)?.trim().toLowerCase();  
             const blogs = await Blog.find({ published : true, reg : reg});
             res.json({blogs})
+        } catch (error) {
+            res.status(500).json({error : 'Error al obtener los blogs'})
+        }
+    }
+
+    public static async getBlogByTags(req : Request, res : Response) {
+        try {
+            const reg = (req.query.reg as string)?.trim().toLowerCase();  
+            const tagQuery = (req.query.tag) as string;
+            const blogs = await Blog.find({
+                published : true,
+                reg : reg,
+                tags : { $regex : new RegExp(tagQuery, 'i') }
+            })
+            res.json({blogs});
         } catch (error) {
             res.status(500).json({error : 'Error al obtener los blogs'})
         }

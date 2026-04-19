@@ -34,6 +34,7 @@ export default function CreateBlogView() {
         const formData = {
             title : headingBlock?.value || 'Mi primer blog',
             description : blogDraft.description ?? '',
+            tags,
             published,
             reg : reg.value,
             post : {
@@ -42,7 +43,6 @@ export default function CreateBlogView() {
                     value : block.value,
                     order : block.order
                 })),
-                tags : tags
             }
         };
         mutate(formData);

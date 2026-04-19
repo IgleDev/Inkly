@@ -9,9 +9,6 @@ export const PostSchema = new Schema ({
           order: { type: Number, required: true }
         }
     ],
-    tags : [{
-        type : String
-    }],
     blog : {
         type : Schema.Types.ObjectId, 
         ref : 'Blog', 

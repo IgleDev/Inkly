@@ -13,6 +13,7 @@ export const userSchema = z.object({
 export const blogSchema = z.object({
     title : z.string(),
     description : z.string().optional(),
+    tags : z.array(z.string()),
     owner : z.string(),
     published : z.boolean(),
     reg : z.string(),
@@ -25,7 +26,6 @@ export const postSchema = z.object({
         value : z.any(),
         order : z.number()
     })),
-    tags : z.array(z.string()),
     blog : z.string(),
     author : z.string(),
 })

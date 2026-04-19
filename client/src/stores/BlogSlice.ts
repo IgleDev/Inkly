@@ -29,7 +29,7 @@ export interface iBlogState {
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
-    blogDraft: { title : '', description : ''},
+    blogDraft: { title : '', description : '', tags : []},
     updateTitleBlock: (value: string) => {
         set((state) => ({
             blocks: state.blocks.map(block => 
@@ -87,7 +87,7 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
     setTags : (tags) => set({ tags }),
     clearFunction : () => set({
         blocks : [], 
-        blogDraft : { title : '', description : ''},
+        blogDraft : { title : '', description : '', tags : []},
         tags : [],
         selectedBlock : null
     })
