@@ -19,11 +19,17 @@ export interface iBlogState {
     closeModalUpload: () => void,
     modalBack : boolean,
     openModalBack : () => void,
-    closeModalBack : () => void
+    closeModalBack : () => void,
+    modalTags : boolean,
+    openModalTags : () => void,
+    closeModalTags : () => void,
+    tags : string[],
+    setTags : (tags : string[]) => void,
+    clearFunction : () => void
 }
 
-export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
-    blogDraft: { title : '', description : ''},
+export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
+    blogDraft: { title : '', description : '', tags : []},
     updateTitleBlock: (value: string) => {
         set((state) => ({
             blocks: state.blocks.map(block => 
@@ -70,5 +76,19 @@ export const createBlogSlice : StateCreator<iBlogState> = (set) => ({
     closeModalUpload : () => set({modalUpload : false, selectedBlock : null}),
     modalBack : false,
     openModalBack : () => set({ modalBack : true }),
-    closeModalBack : () => set({ modalBack : false, blocks : [], blogDraft : { title : '', description : ''} })
+    closeModalBack : () => {
+        set({ modalBack : false });
+        get().clearFunction();
+    },
+    modalTags : false,
+    openModalTags : () => set({ modalTags : true }),
+    closeModalTags : () => set({ modalTags : false }),
+    tags : [],
+    setTags : (tags) => set({ tags }),
+    clearFunction : () => set({
+        blocks : [], 
+        blogDraft : { title : '', description : '', tags : []},
+        tags : [],
+        selectedBlock : null
+    })
 });

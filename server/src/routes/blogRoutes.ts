@@ -19,6 +19,12 @@ router.get('/',
     BlogController.getAllBlogs
 );
 
+router.get('/filter-by-tags',
+    query('reg').notEmpty().withMessage('La región es obligatoria'),
+    query('tag').isString().withMessage('El tag debe ser texto').notEmpty().withMessage('No puede estar vacio'),
+    BlogController.getBlogByTags
+);
+
 // * POST
 
 router.post('/create',

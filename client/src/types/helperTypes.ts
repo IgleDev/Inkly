@@ -33,6 +33,7 @@ export const BlockSelection: { [key: string]: string } = {
 export interface iBlogFormData {
   title: string;
   description: string;
+  tags: string[];
   published : boolean;
   reg : string;
   post: {
@@ -41,6 +42,5 @@ export interface iBlogFormData {
       value: any;
       order: number;
     }[];
-    tags: string[];
   };
 }

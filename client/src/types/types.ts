@@ -9,7 +9,7 @@ export type iUserForm = Pick<iUser, 'name' | 'secondName' | 'email' | 'password'
 
 // Blogs
 export type iBlog = z.infer<typeof blogSchema>;
-export type iBlogPresentation = Pick<iBlog, 'title' | 'description'>;
+export type iBlogPresentation = Pick<iBlog, 'title' | 'description' | 'tags'>;
 
 // Blocks
 export type iPost = z.infer<typeof postSchema>
