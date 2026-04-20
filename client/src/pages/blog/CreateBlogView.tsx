@@ -16,12 +16,15 @@ export default function CreateBlogView() {
     const blocks = useAppStore(state => state.blocks);
     const reg = useAppStore(state => state.regSelect);
     const tags = useAppStore(state => state.tags);
+    const clearFunction = useAppStore(state => state.clearFunction);
+
     
     const queryClient = useQueryClient();
     const { mutate, isPending } = useMutation({
         mutationFn : createBlog,
         onSuccess : () => { 
             queryClient.invalidateQueries({ queryKey : ['blogs']});
+            clearFunction();
             navigate('/');
         },
         onError : (error) => {
@@ -41,6 +44,7 @@ export default function CreateBlogView() {
                 blocks : blocks.map(block => ({
                     type : block.type,
                     value : block.value,
+                    description : block.description || '',
                     order : block.order
                 })),
             }

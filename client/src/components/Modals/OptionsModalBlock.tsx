@@ -18,14 +18,16 @@ export default function OptionsModalBlock() {
 
     const handleConfirm = () => {
         if (!selectedBlock || !inputValue) return;
-        addRadioBlock(selectedBlock, inputValue);
+        addRadioBlock(selectedBlock, inputValue, descriptionValue);
         setInputValue('');
+        setDescriptionValue('');
         closeModalUpload();
     }
 
     const handleCancel = () => {
         setInputValue('');
         closeModalUpload();
+        setDescriptionValue('');
         openModal();
     }
 
