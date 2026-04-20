@@ -7,7 +7,7 @@ interface iBlogResumeCardProps {
 export default function BlogResumeCard({ blog } : iBlogResumeCardProps) {
   return (
     <div className="flex flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer w-72">
-      <h2 className="text-2xl font-bold w-80">{blog.title}</h2>
+      <h2 className="text-2xl font-bold text-wrap">{blog.title}</h2>
       <div className="mt-5">
         <p className="text-black/50">{blog.description}</p>
       </div>

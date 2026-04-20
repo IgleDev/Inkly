@@ -9,7 +9,7 @@ export interface iBlogState {
     blocks : iBlockSelect[],
     selectedBlock : tBlockType | null,
     selectRadioBlock : (blockType : tBlockType) => void,
-    addRadioBlock : (blockType : tBlockType, inputValue : string) => void,
+    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string) => void,
     updateBlock : (order : number, value : string) => void,
     modal : boolean,
     openModal : () => void,
@@ -25,7 +25,7 @@ export interface iBlogState {
     closeModalTags : () => void,
     tags : string[],
     setTags : (tags : string[]) => void,
-    clearFunction : () => void
+    clearFunction : () => void,
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
@@ -49,11 +49,12 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
             selectedBlock: blockType
         });
     },
-    addRadioBlock : (blockType : tBlockType, inputValue : string) => {
+    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string) => {
         set((state) => {
             const newBlock: iBlockSelect = {
                 type: blockType,
                 value: inputValue,
+                description : description || '',
                 order: state.blocks.length
             };
 
@@ -90,5 +91,5 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
         blogDraft : { title : '', description : '', tags : []},
         tags : [],
         selectedBlock : null
-    })
+    }),
 });

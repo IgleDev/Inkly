@@ -24,7 +24,7 @@ export default function ModalBlock() {
             closeModal();           
             openModalUpload();      
         } else {
-            addRadioBlock(selectedBlock, '');
+            addRadioBlock(selectedBlock, '', '');
             closeModal();
         }
     }

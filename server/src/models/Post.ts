@@ -1,11 +1,12 @@
 import mongoose, { Schema } from "mongoose";
-import { tBlogClass, tPostClass } from "../types";
+import { tPostClass } from "../types";
 
 export const PostSchema = new Schema ({
     blocks:  [
         {
           type:  { type: String, enum: ['paragraph', 'heading', 'image', 'video', 'quote'], required: true },
           value: { type: Schema.Types.Mixed, required: true },
+          description : { type : String },
           order: { type: Number, required: true }
         }
     ],
