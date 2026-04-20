@@ -14,16 +14,17 @@ export default function Home() {
     const { data : user, isError, isLoading : authLoading } = useAuth();
 
     const [tag, setTag] = useState('');
+    const [search, setSearch] = useState('');
     const regSelect = useAppStore(state => state.regSelect);
     const regFilter = useAppStore(state => state.regFilter);
     const updateRegFilter = useAppStore(state => state.updateRegFilter);
     const activeRegion = regFilter.value ? regFilter : regSelect;
 
     const { data : blogs } = useQuery({
-        queryKey: ['blogs', activeRegion.value, tag],
+        queryKey: ['blogs', activeRegion.value, search],
         queryFn : () => {
-            if(tag) {
-                return getBlogsByTags(activeRegion.value!, tag);
+            if(search) {
+                return getBlogsByTags(activeRegion.value!, search);
             }
             return getAllBlogs(activeRegion.value!);
         },
@@ -65,9 +66,8 @@ export default function Home() {
                         </select>
                     </div>
                     <div className="flex items-center w-2/6 mt-10 gap-2">
-                        <input type="text" placeholder="Filtrar por temas..." className="flex-1 p-3 rounded-full border border-[#C53F56] outline-none" value={tag}
-                        onChange={(e) => setTag(e.target.value)} />
-                        <button className="p-3 rounded-full border bg-[#C53F56] text-white flex items-center justify-center"><MagnifyingGlassIcon className="w-6 h-6" /></button>
+                        <input type="text" placeholder="Filtrar por temas..." className="flex-1 p-3 rounded-full border border-[#C53F56] outline-none" value={tag} onChange={(e) => setTag(e.target.value)}/>
+                        <button onClick={() => setSearch(tag)} className="p-3 rounded-full border bg-[#C53F56] text-white flex items-center justify-center"><MagnifyingGlassIcon className="w-6 h-6" /></button>
                     </div>
                 </div>
                 <section className="flex flex-row justify-start w-full p-5">
