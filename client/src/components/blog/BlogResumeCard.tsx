@@ -6,7 +6,7 @@ interface iBlogResumeCardProps {
 
 export default function BlogResumeCard({ blog } : iBlogResumeCardProps) {
   return (
-    <div className="flex flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer w-72">
+    <a href={`blog/${blog._id}`} className="flex flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer w-72">
       <h2 className="text-2xl font-bold text-wrap">{blog.title}</h2>
       <div className="mt-5">
         <p className="text-black/50">{blog.description}</p>
@@ -16,6 +16,6 @@ export default function BlogResumeCard({ blog } : iBlogResumeCardProps) {
           <span key={index} className="bg-[#ee899a] mr-2 mt-2 p-2 px-3 rounded-full font-bold">#{tag}</span>
         ))}
       </div>
-    </div>
+    </a>
   )
 }

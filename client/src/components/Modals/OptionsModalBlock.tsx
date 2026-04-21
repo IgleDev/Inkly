@@ -8,6 +8,7 @@ import { BLOCK_TYPES } from "@/types/helperTypes";
 
 export default function OptionsModalBlock() {
     const [inputValue, setInputValue] = useState('');
+    const [fileValue, setFileValue] = useState<File | null>(null);
     const [descriptionValue, setDescriptionValue] = useState('');
 
     const modalUpload = useAppStore(state => state.modalUpload);
@@ -18,9 +19,10 @@ export default function OptionsModalBlock() {
 
     const handleConfirm = () => {
         if (!selectedBlock || !inputValue) return;
-        addRadioBlock(selectedBlock, inputValue, descriptionValue);
+        addRadioBlock(selectedBlock, inputValue, descriptionValue, fileValue ?? undefined);
         setInputValue('');
         setDescriptionValue('');
+        setFileValue(null);
         closeModalUpload();
     }
 
@@ -44,7 +46,11 @@ export default function OptionsModalBlock() {
             return (
                 <div className="flex flex-col">
                     <input type="file" accept={selectedBlock === BLOCK_TYPES.IMAGE ? `${BLOCK_TYPES.IMAGE}/*` : `${BLOCK_TYPES.VIDEO}/*`}
-                        onChange={e => { const file = e.target.files?.[0]; if (file) setInputValue(URL.createObjectURL(file)); }}
+                        onChange={e => { const file = e.target.files?.[0]; 
+                            if (file) {
+                                setInputValue(URL.createObjectURL(file)); setFileValue(file); 
+                            }
+                        }}
                         className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-400 mb-2"
                     />
 

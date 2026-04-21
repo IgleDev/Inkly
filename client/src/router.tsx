@@ -6,6 +6,8 @@ import LoginView from "./pages/auth/LoginView";
 import Home from "./pages/Home";
 import RegView from "./pages/RegView";
 import CreateBlogView from "./pages/blog/CreateBlogView";
+import BlogLayout from "./layouts/BlogLayout";
+import BlogView from "./pages/blog/BlogView";
 
 export default function Router() {
     return (
@@ -19,6 +21,9 @@ export default function Router() {
                     <Route path="/" element={<Home />} index></Route>
                     <Route path="/select-region" element={<RegView />}></Route>
                     <Route path="/new/create-blog" element={<CreateBlogView />}></Route>
+                </Route>
+                <Route element={<BlogLayout />}>
+                    <Route path="/blog/:id" element={<BlogView />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

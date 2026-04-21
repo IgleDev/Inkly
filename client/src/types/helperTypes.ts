@@ -20,6 +20,7 @@ export interface iBlockSelect {
   type : tBlockType,
   description? : string, // Para bloques como imagenes, donde podemos agregar una descripción adicional
   value : string, // Texto, URL, etc...
+  file? : File;
   order : number // Manter o orden dos blocos no post
 }
 

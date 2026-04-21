@@ -1,4 +1,5 @@
 import { createBlog } from "@/api/BlogAPI";
+import { uploadImage } from "@/api/UploadAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import { useNavigate } from "react-router-dom";
 import TagBlog from "@/components/blog/TagBlog";
@@ -8,6 +9,7 @@ import TitleBlog from "@/components/blog/TitleBlog";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateModalBlock from "@/components/Modals/CreateModalBlock";
+import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes";
 
 export default function CreateBlogView() {
     const navigate = useNavigate();
@@ -32,8 +34,16 @@ export default function CreateBlogView() {
         }
     });
 
-    const handlePublish = (published : boolean) => {
+    const handlePublish = async (published : boolean) => {
         const headingBlock = blocks.find(block => block.type === 'heading');
+        const processedBlocks = await Promise.all(
+        blocks.map(async (block: iBlockSelect) => {
+            if ((block.type === BLOCK_TYPES.IMAGE || block.type === BLOCK_TYPES.VIDEO) && block.file) {
+            const url = await uploadImage(block.file);
+            return { ...block, value: url };
+            }
+            return block;
+        }));
         const formData = {
             title : headingBlock?.value || 'Mi primer blog',
             description : blogDraft.description ?? '',
@@ -41,7 +51,7 @@ export default function CreateBlogView() {
             published,
             reg : reg.value,
             post : {
-                blocks : blocks.map(block => ({
+                blocks : processedBlocks.map(block => ({
                     type : block.type,
                     value : block.value,
                     description : block.description || '',

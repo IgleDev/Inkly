@@ -49,3 +49,13 @@ export async function getBlogsByTags(reg : string, tag : string) {
         axiosError(error);
     }
 }
+
+export async function getBlogById(id : string) {
+    try {
+        const url = `/blog/${id}`;
+        const { data } = await api.get(url);
+        return data;
+    } catch (error) {
+        axiosError(error);
+    }
+}
