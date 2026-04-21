@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, query } from "express-validator";
+import { body, param, query } from "express-validator";
 import { authenticate } from "../middleware/authenticate";
 import { handleInputErrors } from "../middleware/validate";
 import { BlogController } from "../controllers/BlogController";
@@ -24,6 +24,11 @@ router.get('/filter-by-tags',
     query('tag').isString().withMessage('El tag debe ser texto').notEmpty().withMessage('No puede estar vacio'),
     BlogController.getBlogByTags
 );
+
+router.get('/:id',
+    param('id').isMongoId().withMessage('ID de blog no válido').notEmpty().withMessage('ID de blog es obligatorio'),
+    BlogController.getBlogById
+)
 
 // * POST
 

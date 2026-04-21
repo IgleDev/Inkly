@@ -24,23 +24,47 @@ export default function BlockEditor({ block } : iBlockEditorProps) {
         )
     }
 
-    if(block.type === BLOCK_TYPES.IMAGE) {
+    if (block.type === BLOCK_TYPES.IMAGE) {
+        const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const tempUrl = URL.createObjectURL(file);
+            updateBlock(block.order, tempUrl, file);
+        };
+
         return (
             <div className="w-full">
-                <img src={block.value} alt="Imagen subida" className="w-full object-cover rounded-lg"/>
+            {block.value
+                ? <img src={block.value} className="w-full object-cover rounded-lg" />
+                : <label className="w-full h-40 border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer">
+                    <span className="text-gray-400">Seleccionar imaxe</span>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                </label>
+            }
             </div>
-        )
+        );
     }
 
     if(block.type === BLOCK_TYPES.VIDEO) {
+        const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            const tempUrl = URL.createObjectURL(file);
+            updateBlock(block.order, tempUrl, file);
+        };
         return (
             <div className="w-full">
-                <video controls className="w-full rounded-lg">
+            {block.value
+                ? <video controls className="w-full rounded-lg">
                     <source src={block.value} type="video/mp4" />
-                    Tu navegador no soporta el elemento de video.
                 </video>
+                : <label className="w-full h-40 border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer">
+                    <span className="text-gray-400">Seleccionar vídeo</span>
+                    <input type="file" accept="video/*" className="hidden" onChange={handleFileChange} />
+                </label>
+            }
             </div>
-        )
+        );
     }
 
     if(block.type === BLOCK_TYPES.QUOTE) {

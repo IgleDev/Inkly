@@ -9,8 +9,8 @@ export interface iBlogState {
     blocks : iBlockSelect[],
     selectedBlock : tBlockType | null,
     selectRadioBlock : (blockType : tBlockType) => void,
-    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string) => void,
-    updateBlock : (order : number, value : string) => void,
+    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string, file? : File) => void,
+    updateBlock : (order : number, value : string, file? : File) => void,
     modal : boolean,
     openModal : () => void,
     closeModal : () => void,
@@ -29,7 +29,7 @@ export interface iBlogState {
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
-    blogDraft: { title : '', description : '', tags : []},
+    blogDraft: { _id : '', title : '', description : '', tags : []},
     updateTitleBlock: (value: string) => {
         set((state) => ({
             blocks: state.blocks.map(block => 
@@ -49,12 +49,13 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
             selectedBlock: blockType
         });
     },
-    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string) => {
+    addRadioBlock : (blockType : tBlockType, inputValue : string, description : string, file? : File) => {
         set((state) => {
             const newBlock: iBlockSelect = {
                 type: blockType,
                 value: inputValue,
                 description : description || '',
+                file: file,
                 order: state.blocks.length
             };
 
@@ -64,9 +65,9 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
             };
         });
     },
-    updateBlock : (order : number, value : string) => {
+    updateBlock : (order : number, value : string, file? : File) => {
         set((state) => ({
-            blocks : state.blocks.map(block => block.order === order ? {...block, value } : block)
+            blocks : state.blocks.map(block => block.order === order ? {...block, value, ...(file && { file }) } : block)
         }))
     },
     modal : false,
@@ -88,7 +89,7 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
     setTags : (tags) => set({ tags }),
     clearFunction : () => set({
         blocks : [], 
-        blogDraft : { title : '', description : '', tags : []},
+        blogDraft : { _id : '', title : '', description : '', tags : []},
         tags : [],
         selectedBlock : null
     }),

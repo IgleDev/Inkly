@@ -66,4 +66,21 @@ export class BlogController {
             res.status(500).json({error : 'Error al obtener los blogs'})
         }
     }
+
+    public static async getBlogById(req : Request, res : Response) {
+        try {
+            const { id } = req.params;
+            
+            const blog = await Blog.findById(id);
+            if(!blog) {
+                return res.status(404).json({ error : 'No se encontró ningún blog asociado a ese ID'})
+            }
+
+            const post = await Post.findOne({ blog: id });
+
+            res.json({blog, blocks : post?.blocks || [], author : post.author});
+        } catch (error) {
+            res.status(500).json({error : 'Error al obtener el blog'})
+        }
+    }
 }
