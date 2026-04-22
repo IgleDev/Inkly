@@ -69,3 +69,10 @@ export const postSchema = z.object({
     blog : z.string(),
     author : z.string(),
 })
+
+export const accountSchema = z.object({
+    user: userSchema,
+    blogs: z.array(
+        blogSchema.nullable(),
+    )
+})

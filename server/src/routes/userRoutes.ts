@@ -19,6 +19,14 @@ router.get('/user',
     UserController.user
 )
 
+router.get('/user/profile/:name', 
+    UserController.getUserByName
+);
+
+router.get('/user/:id', 
+    UserController.getUserById
+);
+
 // * POST
 
 router.post('/',

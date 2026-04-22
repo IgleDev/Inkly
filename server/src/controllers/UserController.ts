@@ -2,6 +2,7 @@ import User from '../models/User'
 import type { Request, Response } from 'express'
 import { checkPassword, hashPassword } from '../utils/bcrypt';
 import { generateJWT } from '../utils/jwt';
+import Blog from '../models/Blog';
 
 export class UserController {
     public static createUser = async (req : Request, res : Response) => {
@@ -42,5 +43,32 @@ export class UserController {
 
     public static user = async (req : Request, res : Response) => {
         return res.json(req.user);
+    }
+
+    public static getUserById = async (req : Request, res : Response) => {
+        try {
+            const user = await User.findById(req.params.id).select('name secondName email reg');
+            if(!user) {
+                const error = new Error('Usuario no encontrado');
+                return res.status(404).send({ error : error.message })
+            }
+            res.json(user);
+        } catch (error) {
+            throw new Error
+        }
+    }
+
+    public static getUserByName = async (req: Request, res: Response) => {
+        try {
+            const user = await User.findOne({ name: req.params.name }).select('name secondName email reg');
+            if (!user) {
+                const error = new Error('Usuario no encontrado');
+                return res.status(404).send({ error: error.message });
+            }
+            const blogs = await Blog.find({ owner : user._id }).select('title description tags');
+            res.json({ user, blogs });
+        } catch (error) {
+            res.status(500).send({ error: 'Error del servidor' });
+        }
     }
 }

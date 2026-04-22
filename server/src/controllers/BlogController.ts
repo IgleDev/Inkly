@@ -77,7 +77,6 @@ export class BlogController {
             }
 
             const post = await Post.findOne({ blog: id });
-
             res.json({blog, blocks : post?.blocks || [], author : post.author});
         } catch (error) {
             res.status(500).json({error : 'Error al obtener el blog'})
