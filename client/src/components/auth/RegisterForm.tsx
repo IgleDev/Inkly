@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import type { iUserForm } from "@/types/types";
 import ErrorMessage from "../ErrorMessage";
-import { useMutation } from "@tanstack/react-query";
 import { createAccount } from "@/api/AuthAPI";
+import countries from "@/json/countries.json";
+import type { iUserForm } from "@/types/types";
+import { useMutation } from "@tanstack/react-query";
 
 export default function RegisterForm() {
 
-  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: '' };
+  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: "" };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
 
@@ -105,14 +106,12 @@ export default function RegisterForm() {
           <select className="duo-select"
             {...register("reg", {
               required: "Selecciona una región",
-              valueAsNumber: true
             })}
           >
             <option value="">Selecciona tu región</option>
-            <option value="1">España</option>
-            <option value="1">México</option>
-            <option value="1">Argentina</option>
-            <option value="1">Colombia</option>
+            {countries.map((country) => (
+              <option key={country.value} value={country.value}>{country.name}</option>
+            ))}
           </select>
           
           {errors.reg && (

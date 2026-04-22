@@ -12,6 +12,7 @@ const axiosError = (error : unknown) => {
 export async function createAccount(formData : iUserForm) {
     try {
         const url = `/users`;
+        console.log(formData);
         const { data } = await api.post<string>(url, formData);
         return data;
     } catch (error) {
