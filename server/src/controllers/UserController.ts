@@ -13,6 +13,7 @@ export class UserController {
             return res.status(409).send({ error : error.message });
         }
         const user = new User(req.body);
+        console.log(user);
         user.password = await hashPassword(user.password);  // Ciframos contrasinal
         try {
             await user.save();
