@@ -1,5 +1,5 @@
-import { Document } from "mongoose";
 import { iBlock } from "./helperModel";
+import { Document, Types } from "mongoose";
 
 export type tUserClass = Document & {
     name : string,
@@ -12,7 +12,7 @@ export type tUserClass = Document & {
 export type tBlogClass = Document & {
     title : string,
     description : string,
-    owner : string,
+    owner : Types.ObjectId,
     published : boolean,
     reg : string,
 }
@@ -21,6 +21,6 @@ export type tPostClass = Document & {
     title : string,
     blocks : iBlock[],
     tags : string[],
-    blog : string,
-    author : string
+    blog : Types.ObjectId,
+    author :Types.ObjectId
 }

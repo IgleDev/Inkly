@@ -8,6 +8,8 @@ import RegView from "./pages/RegView";
 import CreateBlogView from "./pages/blog/CreateBlogView";
 import BlogLayout from "./layouts/BlogLayout";
 import BlogView from "./pages/blog/BlogView";
+import AccountLayout from "./layouts/AccountLayout";
+import Perfil from "./pages/account/Perfil";
 
 export default function Router() {
     return (
@@ -24,6 +26,9 @@ export default function Router() {
                 </Route>
                 <Route element={<BlogLayout />}>
                     <Route path="/blog/:id" element={<BlogView />}></Route>
+                </Route>
+                <Route element={<AccountLayout />}>
+                    <Route path="/perfil/:name" element={<Perfil />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

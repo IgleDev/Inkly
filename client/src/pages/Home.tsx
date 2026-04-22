@@ -45,7 +45,8 @@ export default function Home() {
                 <div>
                     {user?.name && <p className="text-3xl font-bold">Bienvenido <span className="text-[#C53F56]">{user.name}</span></p>}
                 </div>
-                <div>
+                <div className="flex">
+                    <Button url={user ? `/perfil/${encodeURIComponent(user.name)}` : '#'} text="Ver Perfil" />
                     <Button url={user ? '/new/create-blog' : '#'} text="Crear Blog" />
                 </div>
             </nav>

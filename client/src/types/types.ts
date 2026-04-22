@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { blockSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
+import type { accountSchema, blockSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
 import type { BLOCK_TYPES } from "./helperTypes";
 
 // Usuarios
@@ -15,3 +15,6 @@ export type iBlogPresentation = Pick<iBlog, '_id' | 'title' | 'description' | 't
 export type iPost = z.infer<typeof postSchema>
 export type tBlockType = typeof BLOCK_TYPES[keyof typeof BLOCK_TYPES];
 export type iBlock = z.infer<typeof blockSchema>;
+
+// Account
+export type iAccount = z.infer<typeof accountSchema>
