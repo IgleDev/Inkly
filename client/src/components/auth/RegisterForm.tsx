@@ -28,7 +28,7 @@ export default function RegisterForm() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-white" htmlFor="name">Nombre</label>
+            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="name">Nombre</label>
             <input
               id="name"
               type="text"
@@ -42,7 +42,7 @@ export default function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-white" htmlFor="secondName">Apellido</label>
+            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="secondName">Apellido</label>
             <input
               id="secondName"
               type="text"
@@ -60,7 +60,7 @@ export default function RegisterForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-white" htmlFor="email">
+            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="email">
               Email
             </label>
             <input
@@ -80,7 +80,7 @@ export default function RegisterForm() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-white" htmlFor="password">Contraseña</label>
+            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="password">Contraseña</label>
             <input
               id="password"
               type="password"
@@ -98,7 +98,7 @@ export default function RegisterForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-lg font-semibold text-white">
+          <label className="text-lg font-semibold text-[#C53F56]">
             Región
           </label>
 
@@ -123,20 +123,20 @@ export default function RegisterForm() {
         <input
           type="submit"
           value="CREAR CUENTA"
-          className="w-full mt-6 bg-green-500 hover:bg-green-600 text-white text-xl font-extrabold py-4 rounded-xl 
+          className="w-full mt-6 bg-[#C53F56] hover:bg-[#d8455e] text-white text-xl font-extrabold py-4 rounded-xl 
             shadow-lg active:scale-95 transition cursor-pointer"
         />
       </form>
       <nav className="mt-10 flex flex-col space-y-4">
         <Link
           to={"/auth/login"}
-          className="text-center text-white font-bold"
+          className="text-center text-[#C53F56] font-bold"
         >
           Ya tienes cuenta? Inicia Sesión!
         </Link>
         <Link
           to={"/auth/forgot-password"}
-          className="text-center text-white font-bold"
+          className="text-center text-[#C53F56] font-bold"
         >
           ¿Olvidaste tu contraseña? Reestablecer
         </Link>
