@@ -20,12 +20,10 @@ router.get('/user',
 )
 
 router.get('/user/profile/:name',
-    authenticate, 
     UserController.getUserByName
 );
 
 router.get('/user/:id',
-    authenticate, 
     UserController.getUserById
 );
 

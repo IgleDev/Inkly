@@ -1,3 +1,4 @@
+import { AUTH_TOKEN } from "@/config/config";
 import axios from "axios";
 
 export interface Block {
@@ -7,6 +8,7 @@ export interface Block {
 }
 
 export const uploadImage = async (file: File): Promise<string> => {
+    const token = localStorage.getItem(AUTH_TOKEN);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -14,6 +16,7 @@ export const uploadImage = async (file: File): Promise<string> => {
         formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
+                Authorization : `Bearer ${token}`
             },
         }
     );

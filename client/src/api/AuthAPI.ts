@@ -1,13 +1,7 @@
 import api from "@/lib";
-import { isAxiosError } from "axios";
 import type { iUserForm, iUserFormLogin } from "@/types/types";
 import { userSchema } from "@/schema/schemas";
-
-const axiosError = (error : unknown) => {
-    if(isAxiosError(error) && error.response) {
-        throw new Error(error.response.data.error);
-    }
-}
+import { axiosError } from "@/helper";
 
 export async function createAccount(formData : iUserForm) {
     try {
