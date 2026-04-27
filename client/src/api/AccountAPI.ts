@@ -15,7 +15,7 @@ export async function getUserByName(name: string) {
 export async function getUserById(id: string) {
     try {
         const url = `users/user/${id}`;
-        const { data } = await api.get(url);
+        const { data } = await api.get<iAccount>(url);
         return data;
     } catch (error) {
         axiosError(error);

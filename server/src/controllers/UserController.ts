@@ -18,7 +18,7 @@ export class UserController {
             await user.save();
             res.send('Usuario Registrado correctamente');
         } catch (error) {
-            throw new Error
+            res.status(500).send({ error: 'Error del servidor' });
         }
     }
 
@@ -48,13 +48,14 @@ export class UserController {
     public static getUserById = async (req : Request, res : Response) => {
         try {
             const user = await User.findById(req.params.id).select('name secondName email reg');
-            if(!user) {
+            if (!user) {
                 const error = new Error('Usuario no encontrado');
-                return res.status(404).send({ error : error.message })
+                return res.status(404).send({ error: error.message });
             }
-            res.json(user);
+            const blogs = await Blog.find({ owner : user._id }).select('title description tags published createdAt updatedAt');
+            res.json({ user, blogs });
         } catch (error) {
-            throw new Error
+            res.status(500).send({ error: 'Error del servidor' });        
         }
     }
 

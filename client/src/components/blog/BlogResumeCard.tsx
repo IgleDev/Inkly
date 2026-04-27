@@ -1,8 +1,9 @@
-import type { iBlogPresentation } from "@/types/types"
+import { formatDate } from "@/helper"
 import { Link } from "react-router-dom"
+import type { iBlogAccount } from "@/types/types"
 
 interface iBlogResumeCardProps {
-  blog : iBlogPresentation,
+  blog : iBlogAccount,
   isOwner? : boolean
 }
 
@@ -22,7 +23,23 @@ export default function BlogResumeCard({ blog, isOwner } : iBlogResumeCardProps)
         <div>
           <button className="bg-[#C53F56] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Eliminar</button>
           <button className="bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Editar</button>
-        </div>}
+        </div>
+      }
+      <p className="mt-5 text-gray-500 ">
+        {blog?.createdAt && (
+          <>
+            {blog.updatedAt !== blog.createdAt ? 'Actualizado el ' : 'Creado el '}
+            {blog.updatedAt !== blog.createdAt ? formatDate(blog.updatedAt) : formatDate(blog.createdAt)} 
+            <span className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs font-semibold ${blog.published? 'bg-green-100 text-green-700'
+              : 'bg-gray-200 text-gray-600'}`}>
+                <span
+                  className={`w-2 h-2 rounded-full ${blog.published ? 'bg-green-500' : 'bg-gray-400'}`}
+                />
+                {blog.published ? 'Publicado' : 'Borrador'}
+            </span>
+          </>
+        )}
+      </p>
     </Link>
   )
 }
