@@ -1,17 +1,16 @@
+import { axiosError, getToken } from "@/helper";
 import api from "@/lib";
 import type { iBlogFormData } from "@/types/helperTypes";
-import { isAxiosError } from "axios";
-
-const axiosError = (error : unknown) => {
-    if(isAxiosError(error) && error.response) {
-        throw new Error(error.response.data.error);
-    }
-}
 
 export async function createBlog(formData : iBlogFormData) {
     try {
         const url = '/blog/create';
-        const { data } = await api.post(url, formData);
+        const { data } = await api.post(url, formData, {
+            headers : {
+                "Content-Type" : "application/json",
+                Authorization : `Bearer ${getToken()}`
+            }
+        });
 
         if(!data) {
             throw new Error('No se ha podido crear el blog');

@@ -1,12 +1,6 @@
+import { axiosError } from "@/helper";
 import api from "@/lib";
 import type { iAccount } from "@/types/types";
-import { isAxiosError } from "axios";
-
-const axiosError = (error : unknown) => {
-    if(isAxiosError(error) && error.response) {
-        throw new Error(error.response.data.error);
-    }
-}
 
 export async function getUserByName(name: string) {
     try {
