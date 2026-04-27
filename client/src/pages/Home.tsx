@@ -1,14 +1,14 @@
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { getAllBlogs, getBlogsByTags } from "@/api/BlogAPI";
 import { Navigate } from "react-router-dom";
 import countries from '@/json/countries.json';
 import Button from "@/components/utils/Button";
 import { useQuery } from "@tanstack/react-query";
+import type { iBlogAccount } from "@/types/types";
 import { useAppStore } from "@/stores/useAppStore";
-import type { iBlogPresentation } from "@/types/types";
+import { getAllBlogs, getBlogsByTags } from "@/api/BlogAPI";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 
 export default function Home() {
     const { data : user, isError, isLoading : authLoading } = useAuth();
@@ -46,7 +46,7 @@ export default function Home() {
                     {user?.name && <p className="text-3xl font-bold">Bienvenido <span className="text-[#C53F56]">{user.name}</span></p>}
                 </div>
                 <div className="flex">
-                    <Button url={user ? `/perfil/${encodeURIComponent(user.name)}` : '#'} text="Ver Perfil" />
+                    <Button url={user ? `/perfil/${user._id}` : '#'} text="Ver Perfil" />
                     <Button url={user ? '/new/create-blog' : '#'} text="Crear Blog" />
                 </div>
             </nav>
@@ -72,7 +72,7 @@ export default function Home() {
                     </div>
                 </div>
                 <section className="flex flex-row justify-start w-full p-5">
-                    {blogs?.blogs?.map((blog: iBlogPresentation, index : number) => (
+                    {blogs?.blogs?.map((blog: iBlogAccount, index : number) => (
                         <BlogResumeCard key={index} blog={blog} />
                     ))}
                 </section>

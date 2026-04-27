@@ -28,7 +28,7 @@ export default function Router() {
                     <Route path="/blog/:id" element={<BlogView />}></Route>
                 </Route>
                 <Route element={<AccountLayout />}>
-                    <Route path="/perfil/:name" element={<Perfil />}></Route>
+                    <Route path="/perfil/:id" element={<Perfil />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

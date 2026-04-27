@@ -1,19 +1,18 @@
-import { getUserByName } from "@/api/AccountAPI"
-import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
-import { useAuth } from "@/hooks/useAuth"
 import { useReg } from "@/hooks/useReg";
+import { useAuth } from "@/hooks/useAuth";
+import { useParams } from "react-router-dom";
+import { getUserById } from "@/api/AccountAPI";
+import { useQuery } from "@tanstack/react-query";
+import type { iBlogAccount } from "@/types/types";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
-import type { iBlogPresentation } from "@/types/types";
 
 export default function Perfil() {
   const { data: sessionUser } = useAuth();
-  const { name } = useParams<{ name: string }>();
-  const decodedName = decodeURIComponent(name!);
+  const { id } = useParams<{ id: string }>();
   const { data: profileUser, isLoading } = useQuery({
-    queryKey: ['user', decodedName],
-    queryFn: () => getUserByName(decodedName),
-    enabled: !!decodedName
+    queryKey: ['user', id],
+    queryFn: () => getUserById(id!),
+    enabled: !!id
   });
 
   const { user, blogs } = profileUser || {};
@@ -38,7 +37,7 @@ export default function Perfil() {
               Blogs Subidos
             </h2>
           {blogs.map((blog, index) => (
-            <BlogResumeCard key={index} blog={blog as iBlogPresentation} isOwner={isOwner} />
+            <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} />
           ))}
       </div>
       ) : (

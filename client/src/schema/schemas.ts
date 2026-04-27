@@ -18,6 +18,8 @@ export const blogSchema = z.object({
     owner : z.string(),
     published : z.boolean(),
     reg : z.string(),
+    createdAt : z.string(),
+    updatedAt : z.string(),
 })
 
 // Heading Schema
