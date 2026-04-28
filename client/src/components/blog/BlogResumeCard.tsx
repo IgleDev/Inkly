@@ -11,6 +11,7 @@ interface iBlogResumeCardProps {
 }
 
 export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlogResumeCardProps) {
+  const location = window.location.pathname;
   return (
     <div className="w-72">
       <div className="flex justify-between flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer">
@@ -25,16 +26,16 @@ export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlo
             ))}
           </div>
         </Link>
-        {isOwner && 
+        {isOwner && ( 
           <div>
             <DeleteModalBlog blog={blog} user={user} profileId={profileId}/>
             {!blog.published && (
               <button className="bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Editar</button>
             )}
           </div>
-        }
+        )}
         <p className="mt-5 text-gray-500 ">
-          {blog?.createdAt && (
+          {blog?.createdAt && location === `/perfil/${profileId}` && (
             <>
               {blog.updatedAt !== blog.createdAt ? 'Actualizado el ' : 'Creado el '}
               {blog.updatedAt !== blog.createdAt ? formatDate(blog.updatedAt) : formatDate(blog.createdAt)} 
