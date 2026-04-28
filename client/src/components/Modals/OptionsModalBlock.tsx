@@ -2,6 +2,7 @@
 
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/stores/useAppStore";
 import { useState } from "react";
 import { BLOCK_TYPES } from "@/types/helperTypes";
@@ -11,10 +12,12 @@ export default function OptionsModalBlock() {
     const [fileValue, setFileValue] = useState<File | null>(null);
     const [descriptionValue, setDescriptionValue] = useState('');
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const modalUpload = useAppStore(state => state.modalUpload);
     const selectedBlock = useAppStore(state => state.selectedBlock);
     const addRadioBlock = useAppStore(state => state.addRadioBlock);
-    const openModal = useAppStore(state => state.openModal);
     const closeModalUpload = useAppStore(state => state.closeModalUpload);
 
     const handleConfirm = () => {
@@ -24,13 +27,14 @@ export default function OptionsModalBlock() {
         setDescriptionValue('');
         setFileValue(null);
         closeModalUpload();
+        navigate(location.pathname, { replace: true });
     }
 
     const handleCancel = () => {
         setInputValue('');
-        closeModalUpload();
         setDescriptionValue('');
-        openModal();
+        closeModalUpload();
+        navigate(location.pathname + '?addBlock=true', { replace: true });
     }
 
     const renderInput = () => {
@@ -46,17 +50,15 @@ export default function OptionsModalBlock() {
             return (
                 <div className="flex flex-col">
                     <input type="file" accept={selectedBlock === BLOCK_TYPES.IMAGE ? `${BLOCK_TYPES.IMAGE}/*` : `${BLOCK_TYPES.VIDEO}/*`}
-                        onChange={e => { const file = e.target.files?.[0]; 
-                            if (file) {
-                                setInputValue(URL.createObjectURL(file)); setFileValue(file); 
-                            }
+                        onChange={e => {
+                            const file = e.target.files?.[0];
+                            if (file) { setInputValue(URL.createObjectURL(file)); setFileValue(file); }
                         }}
                         className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-400 mb-2"
                     />
-
                     {selectedBlock === BLOCK_TYPES.IMAGE && (
                         <input type="text" value={descriptionValue} onChange={e => setDescriptionValue(e.target.value)} placeholder="Describe la imagen (opcional)"
-                        className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
+                            className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
                     )}
                 </div>
             );
@@ -84,7 +86,7 @@ export default function OptionsModalBlock() {
                         </div>
                         <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row justify-end sm:px-6">
                             <button type="button" data-autofocus onClick={handleCancel}
-                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
+                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
                             >
                                 Cancelar
                             </button>
