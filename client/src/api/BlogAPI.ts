@@ -65,7 +65,7 @@ export async function getBlogById(id : string) {
 
 export async function deleteBlog(id : string) {
     try {
-        const url = `/blog/delete/${id}`;
+        const url = `/blog/delete/${id}?deleteBlog=true`;
         const { data } = await api.delete(url, {
             headers : {
                 Authorization : `Bearer ${getToken()}`

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { deleteBlog } from "@/api/BlogAPI";
+import { useNavigate, useLocation } from "react-router-dom";
 import type { iBlogAccount, iUser } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
@@ -15,15 +16,19 @@ interface iDeleteModalBlogProps {
 
 export default function DeleteModalBlog({ blog, user, profileId } : iDeleteModalBlogProps) {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const showModal = queryParams.get('deleteBlog') === 'true';
+
     const [userInput, setUserInput] = React.useState('');
-    const [isOpen, setIsOpen] = React.useState(false);
 
     const { mutate } = useMutation({
         mutationFn : (id : string) => deleteBlog(id),
         onSuccess : () => { 
             queryClient.invalidateQueries({ queryKey : ['user', 'blogs', profileId] });
             setUserInput('');
-            setIsOpen(false);
+            navigate(location.pathname, { replace: true });
         },
         onError : () => { console.log('Error al eliminar el blog') }
     })
@@ -32,8 +37,8 @@ export default function DeleteModalBlog({ blog, user, profileId } : iDeleteModal
 
     return (
         <div>
-            <button onClick={() => setIsOpen(true)} className="bg-[#C53F56] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Eliminar</button>
-            <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-10">
+            <button onClick={() => navigate(location.pathname + `?deleteBlog=true`)} className="bg-[#C53F56] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Eliminar</button>
+            <Dialog open={showModal} onClose={() => navigate(location.pathname, { replace: true })} className="relative z-10">
                 <DialogBackdrop transition
                 className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
             />
@@ -69,7 +74,7 @@ export default function DeleteModalBlog({ blog, user, profileId } : iDeleteModal
                             </div>
                         </div>
                         <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row justify-end sm:px-6">
-                            <button type="button" data-autofocus onClick={() => setIsOpen(false)}
+                            <button type="button" data-autofocus onClick={() => navigate(location.pathname, { replace: true })}
                               className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
                             >
                                 He cambiado de idea

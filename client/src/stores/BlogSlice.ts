@@ -13,22 +13,13 @@ export interface iBlogState {
     updateBlock : (order : number, value : string, file? : File) => void,
     modal : boolean,
     openModal : () => void,
-    closeModal : () => void,
     modalUpload: boolean,
     openModalUpload: () => void,
     closeModalUpload: () => void,
-    modalBack : boolean,
-    openModalBack : () => void,
     closeModalBack : () => void,
-    modalTags : boolean,
-    openModalTags : () => void,
-    closeModalTags : () => void,
     tags : string[],
     setTags : (tags : string[]) => void,
     clearFunction : () => void,
-    modalDelete : boolean,
-    openModalDelete : () => void,
-    closeModalDelete : () => void
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
@@ -75,19 +66,10 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
     },
     modal : false,
     openModal : () => set({modal : true}),
-    closeModal : () => set({modal : false}),
     modalUpload : false,
     openModalUpload : () => set({modalUpload : true}),
     closeModalUpload : () => set({modalUpload : false, selectedBlock : null}),
-    modalBack : false,
-    openModalBack : () => set({ modalBack : true }),
-    closeModalBack : () => {
-        set({ modalBack : false });
-        get().clearFunction();
-    },
-    modalTags : false,
-    openModalTags : () => set({ modalTags : true }),
-    closeModalTags : () => set({ modalTags : false }),
+    closeModalBack : () => { get().clearFunction(); },
     tags : [],
     setTags : (tags) => set({ tags }),
     clearFunction : () => set({
@@ -96,7 +78,4 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
         tags : [],
         selectedBlock : null
     }),
-    modalDelete : false,
-    openModalDelete : () => set({ modalDelete : true }),
-    closeModalDelete : () => set({ modalDelete : false })
 });

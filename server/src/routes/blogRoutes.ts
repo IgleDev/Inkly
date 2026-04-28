@@ -49,6 +49,7 @@ router.post('/create',
 router.delete('/delete/:id',
     authenticate,
     param('id').isMongoId().withMessage('Campo no válido').notEmpty().withMessage('Falta campo obligatorio'),
+    query('deleteBlog').equals('true').withMessage('Parámetro no válido'),
     BlogController.deleteBlog
 )
 

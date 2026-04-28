@@ -7,7 +7,7 @@ export default function AccountLayout() {
     return (
         <>
             <nav>
-                <button onClick={() => navigate(-1)} className="text-sm text-gray-500 hover:text-[#C53F56] transition-colors mb-4 p-5"><ArrowLeftIcon /> Volver</button>
+                <button onClick={() => navigate(`/`, { replace: true })} className="text-sm text-gray-500 hover:text-[#C53F56] transition-colors mb-4 p-5"><ArrowLeftIcon /> Volver</button>
             </nav>
             <main className="max-w-5xl mx-auto pt-5">
                 <Outlet />
