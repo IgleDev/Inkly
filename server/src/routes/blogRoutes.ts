@@ -46,5 +46,11 @@ router.post('/create',
 
 // * DELETE
 
+router.delete('/delete/:id',
+    authenticate,
+    param('id').isMongoId().withMessage('Campo no válido').notEmpty().withMessage('Falta campo obligatorio'),
+    BlogController.deleteBlog
+)
+
 export default router;
 

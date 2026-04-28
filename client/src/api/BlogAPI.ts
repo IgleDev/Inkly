@@ -52,7 +52,25 @@ export async function getBlogsByTags(reg : string, tag : string) {
 export async function getBlogById(id : string) {
     try {
         const url = `/blog/${id}`;
-        const { data } = await api.get(url);
+        const { data } = await api.get(url, {
+            headers : {
+                Authorization : `Bearer ${getToken()}`
+            }
+        });
+        return data;
+    } catch (error) {
+        axiosError(error);
+    }
+}
+
+export async function deleteBlog(id : string) {
+    try {
+        const url = `/blog/delete/${id}`;
+        const { data } = await api.delete(url, {
+            headers : {
+                Authorization : `Bearer ${getToken()}`
+            }
+        });
         return data;
     } catch (error) {
         axiosError(error);
