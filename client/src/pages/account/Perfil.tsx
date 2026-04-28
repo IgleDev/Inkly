@@ -10,7 +10,7 @@ export default function Perfil() {
   const { data: sessionUser } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { data: profileUser, isLoading } = useQuery({
-    queryKey: ['user', id],
+    queryKey: ['user', 'blogs', id],
     queryFn: () => getUserById(id!),
     enabled: !!id
   });
@@ -37,7 +37,7 @@ export default function Perfil() {
               Blogs Subidos
             </h2>
           {blogs.map((blog, index) => (
-            <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} />
+            <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} user={user} profileId={id}/>
           ))}
       </div>
       ) : (

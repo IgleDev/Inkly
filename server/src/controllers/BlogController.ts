@@ -39,6 +39,8 @@ export class BlogController {
         } catch (error) {
             await session.abortTransaction();
             res.status(500).json({error : 'Error al crear el blog'});
+        } finally {
+            session.endSession();
         }
     }
 
@@ -80,6 +82,29 @@ export class BlogController {
             res.json({blog, blocks : post?.blocks || [], author : post.author});
         } catch (error) {
             res.status(500).json({error : 'Error al obtener el blog'})
+        }
+    }
+
+    public static async deleteBlog(req : Request, res : Response) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        const { id } = req.params;
+
+        try {
+            const blog = await Blog.findById(id);
+            if(!blog) {
+                const error = new Error('No se encontró ningún blog asociado a ese ID');
+                return res.status(404).json({ error : error.message })
+            }
+            await Blog.deleteOne({ _id : id}).session(session);
+            await Post.deleteOne({ blog : id }).session(session);
+            await session.commitTransaction();
+            res.status(200).json({ message: 'Blog eliminado correctamente' });
+        } catch (error) {
+            await session.abortTransaction();
+            res.status(500).json({error : 'Error al eliminar el blog'});
+        } finally {
+            session.endSession();
         }
     }
 }
