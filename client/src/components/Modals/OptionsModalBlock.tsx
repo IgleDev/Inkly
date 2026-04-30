@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/stores/useAppStore";
 import { useState } from "react";
 import { BLOCK_TYPES } from "@/types/helperTypes";
+import { maxLengths } from "@/helper";
 
 export default function OptionsModalBlock() {
     const [inputValue, setInputValue] = useState('');
@@ -40,9 +41,12 @@ export default function OptionsModalBlock() {
     const renderInput = () => {
         if (selectedBlock === BLOCK_TYPES.QUOTE) {
             return (
-                <textarea value={inputValue} onChange={e => setInputValue(e.target.value)}
-                    placeholder="Escribe tu cita..." className="w-full bg-gray-700 text-white rounded-lg p-3 outline-none resize-none"
-                />
+                <>
+                    <textarea value={inputValue} onChange={e => setInputValue(e.target.value)} maxLength={maxLengths.BLOCK_QUOTE}
+                        placeholder="Escribe tu cita..." className="w-full bg-gray-700 text-white rounded-lg p-3 outline-none resize-none"
+                    />
+                    <label className="text-gray-400 text-sm">{inputValue.length}/{maxLengths.BLOCK_QUOTE}</label>
+                </>
             );
         }
 
@@ -57,8 +61,11 @@ export default function OptionsModalBlock() {
                         className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-400 mb-2"
                     />
                     {selectedBlock === BLOCK_TYPES.IMAGE && (
-                        <input type="text" value={descriptionValue} onChange={e => setDescriptionValue(e.target.value)} placeholder="Describe la imagen (opcional)"
-                            className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
+                        <>
+                            <input type="text" value={descriptionValue} onChange={e => setDescriptionValue(e.target.value)} placeholder="Describe la imagen (opcional)" maxLength={maxLengths.BLOCK_IMAGE_DESCRIPTION}
+                                className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
+                            <label className="text-gray-400 text-sm">{descriptionValue.length}/{maxLengths.BLOCK_IMAGE_DESCRIPTION}</label>
+                        </>
                     )}
                 </div>
             );

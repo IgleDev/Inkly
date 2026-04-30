@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
+import { maxLengths } from "@/helper";
 
 export default function TagsModal() {
     const [tag, setTag] = useState("")
@@ -57,11 +58,11 @@ export default function TagsModal() {
                                             </p>
                                         </div>
                                         <div className="flex flex-col w-full mt-5">
-                                            <input value={tag} placeholder="Añadir tags" onChange={(e) => setTag(e.target.value)}
+                                            <label htmlFor="tag" className="text-gray-400 text-sm text-right">{tag.length}/{maxLengths.BLOCK_TAG}</label>
+                                            <input value={tag} placeholder="Añadir tags" onChange={(e) => setTag(e.target.value)} maxLength={maxLengths.BLOCK_TAG}
                                                 className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
-                                            <button type="button" onClick={handleAddTag}
-                                                className="mt-2 w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:w-auto transition-colors"
-                                            >
+                                            <button type="button" className="mt-2 w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:w-auto transition-colors"
+                                                onClick={handleAddTag}>
                                                 Añadir
                                             </button>
                                         </div>
