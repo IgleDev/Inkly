@@ -26,3 +26,12 @@ export const getToken = () : string | null => {
   const token = localStorage.getItem(AUTH_TOKEN);
   return token;
 };
+
+export const maxLengths = {
+  BLOG_TITLE : 50,
+  BLOG_DESCRIPTION : 280,
+  BLOCK_PARAGRAPH : 560,
+  BLOCK_QUOTE : 280,
+  BLOCK_TAG : 20,
+  BLOCK_IMAGE_DESCRIPTION : 100
+}
