@@ -10,7 +10,7 @@ export default function BlogView() {
     const { data, isLoading, error } = useQuery({
         queryKey : ['blog', id],
         queryFn : () => {
-            return getBlogById(id as string);
+          return getBlogById(id as string);
         },
         enabled : !!id
     })
@@ -22,7 +22,7 @@ export default function BlogView() {
     
     return (
       <div>
-        <BlogContent blocks={data.blocks} />
+        <BlogContent data={data} />
       </div>
     )
 }
