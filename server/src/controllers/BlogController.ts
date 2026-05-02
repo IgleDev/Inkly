@@ -69,19 +69,24 @@ export class BlogController {
         }
     }
 
-    public static async getBlogById(req : Request, res : Response) {
+    public static async getBlogById(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            
-            const blog = await Blog.findById(id);
-            if(!blog) {
-                return res.status(404).json({ error : 'No se encontró ningún blog asociado a ese ID'})
+
+            const blog = await Blog.findById(id).populate('owner', 'name -_id');
+            if (!blog) {
+                return res.status(404).json({ error: 'No se encontró ningún blog asociado a ese ID' });
             }
 
-            const post = await Post.findOne({ blog: id });
-            res.json({blog, blocks : post?.blocks || [], author : post.author});
+            const post = await Post.findOne({ blog: id }).populate('author', 'name');
+            
+            res.json({
+                blog,
+                blocks: post?.blocks || [],
+                author: (post?.author as any)?.name || null
+            });
         } catch (error) {
-            res.status(500).json({error : 'Error al obtener el blog'})
+            res.status(500).json({ error: 'Error al obtener el blog' });
         }
     }
 

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import type { accountSchema, blockSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
+import type { accountSchema, blockSchema, blogReadSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
 import type { BLOCK_TYPES } from "./helperTypes";
 
 // Usuarios
@@ -9,6 +9,7 @@ export type iUserForm = Pick<iUser, 'name' | 'secondName' | 'email' | 'password'
 
 // Blogs
 export type iBlog = z.infer<typeof blogSchema>;
+export type iBlogRead = z.infer<typeof blogReadSchema>;
 export type iBlogPresentation = Pick<iBlog, '_id' | 'title' | 'description' | 'tags'>;
 export type iBlogAccount = Pick<iBlog, '_id' | 'title' | 'description' | 'tags' | 'published' |'createdAt' | 'updatedAt'>;
 

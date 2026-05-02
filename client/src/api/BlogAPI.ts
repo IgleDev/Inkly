@@ -1,5 +1,6 @@
-import { axiosError, getToken } from "@/helper";
 import api from "@/lib";
+import type { iBlogRead } from "@/types/types";
+import { axiosError, getToken } from "@/helper";
 import type { iBlogFormData } from "@/types/helperTypes";
 
 export async function createBlog(formData : iBlogFormData) {
@@ -52,7 +53,7 @@ export async function getBlogsByTags(reg : string, tag : string) {
 export async function getBlogById(id : string) {
     try {
         const url = `/blog/${id}`;
-        const { data } = await api.get(url, {
+        const { data } = await api.get<iBlogRead>(url, {
             headers : {
                 Authorization : `Bearer ${getToken()}`
             }

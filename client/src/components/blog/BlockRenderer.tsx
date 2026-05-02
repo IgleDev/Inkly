@@ -1,4 +1,3 @@
-// components/blog/BlockRenderer.tsx
 import type { iBlock } from "@/types/types";
 import { BLOCK_TYPES } from "@/types/helperTypes";
 

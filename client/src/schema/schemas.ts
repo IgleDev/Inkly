@@ -71,11 +71,21 @@ export const postSchema = z.object({
     blocks : z.array(blockSchema),
     blog : z.string(),
     author : z.string(),
-})
+});
 
 export const accountSchema = z.object({
     user: userSchema,
     blogs: z.array(
         blogSchema.nullable(),
     )
-})
+});
+
+export const blogReadSchema = z.object({
+    blog: blogSchema.extend({
+        owner: z.object({
+            name: z.string()
+        })
+    }),
+    blocks: z.array(blockSchema),
+    author: z.string().nullable()
+});
