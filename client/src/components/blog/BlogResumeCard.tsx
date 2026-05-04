@@ -1,5 +1,5 @@
 import { formatDate } from "@/helper"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import type { iBlogAccount, iUser } from "@/types/types"
 import DeleteModalBlog from "../Modals/DeleteModalBlog"
 
@@ -11,7 +11,9 @@ interface iBlogResumeCardProps {
 }
 
 export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlogResumeCardProps) {
+  const navigate = useNavigate();
   const location = window.location.pathname;
+
   return (
     <div className="w-72">
       <div className="flex justify-between flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer">
@@ -27,10 +29,10 @@ export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlo
           </div>
         </Link>
         {isOwner && ( 
-          <div>
+          <div className="flex">
             <DeleteModalBlog blog={blog} user={user} profileId={profileId}/>
             {!blog.published && (
-              <button className="bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Editar</button>
+              <button className="bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl" onClick={() => navigate(`/new/edit-blog/${blog._id}`)}>Editar</button>
             )}
           </div>
         )}

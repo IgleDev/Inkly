@@ -64,6 +64,20 @@ export async function getBlogById(id : string) {
     }
 }
 
+export async function updateBlog(id : string, formData : iBlogFormData) {
+    try {
+        const url = `/blog/edit-blog-published/${id}`;
+        const { data } = await api.put(url, formData, {
+            headers : {
+                Authorization : `Bearer ${getToken()}`
+            }
+        })
+        return data;
+    } catch (error) {
+        axiosError(error);
+    }
+}
+
 export async function deleteBlog(id : string) {
     try {
         const url = `/blog/delete/${id}?deleteBlog=true`;

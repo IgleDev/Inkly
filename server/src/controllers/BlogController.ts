@@ -90,6 +90,41 @@ export class BlogController {
         }
     }
 
+    public static async updateBlogPublished(req : Request, res : Response) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        try {
+            const { id } = req.params;
+            const { title, description, tags, published, reg, post } = req.body;
+            const userId = req.user?._id;
+
+            if(!userId) {
+                const error = new Error('No se ha podido identificar el usuario');
+                return res.status(401).json({ error : error.message });
+            }
+
+            if(!id) {
+                const error = new Error('No se pudo identificar el blog');
+                return res.status(404).json({ error : error.message });
+            }
+
+            const blog = await Blog.findByIdAndUpdate(id, { title, description, tags, published, reg, }, { session, new: true });
+            if (blog.owner.toString() !== userId.toString()) {
+                const error = new Error('No tienes permisos para editar este blog');
+                return res.status(403).json({ error: error.message });
+            }
+            await Post.findOneAndUpdate({ blog: id }, { blocks: post.blocks }, { session });
+            await session.commitTransaction();
+            res.json({ message: 'Blog actualizado correctamente' });
+        } catch (error) {
+            await session.abortTransaction();
+            res.status(500).json({ error : 'Error al editar el blog'});
+        } finally {
+            session.endSession();
+        }
+    }
+
     public static async deleteBlog(req : Request, res : Response) {
         const session = await mongoose.startSession();
         session.startTransaction();

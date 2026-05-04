@@ -23,6 +23,7 @@ export default function Router() {
                     <Route path="/" element={<Home />} index></Route>
                     <Route path="/select-region" element={<RegView />}></Route>
                     <Route path="/new/create-blog" element={<CreateBlogView />}></Route>
+                    <Route path="/new/edit-blog/:id" element={<CreateBlogView />}></Route>
                 </Route>
                 <Route element={<BlogLayout />}>
                     <Route path="/blog/:id" element={<BlogView />}></Route>

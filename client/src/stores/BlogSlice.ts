@@ -20,6 +20,7 @@ export interface iBlogState {
     tags : string[],
     setTags : (tags : string[]) => void,
     clearFunction : () => void,
+    setBlocks: (blocks: iBlockSelect[]) => void;
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
@@ -78,4 +79,5 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
         tags : [],
         selectedBlock : null
     }),
+    setBlocks: (blocks: iBlockSelect[]) => set({ blocks }),
 });
