@@ -1,29 +1,52 @@
-import { createBlog } from "@/api/BlogAPI";
 import { uploadImage } from "@/api/UploadAPI";
 import CreateBlogForm from "./CreateBlogForm";
-import { useNavigate } from "react-router-dom";
 import TagBlog from "@/components/blog/TagBlog";
 import TeamBlog from "@/components/blog/TeamBlog";
 import { useAppStore } from "@/stores/useAppStore";
 import TitleBlog from "@/components/blog/TitleBlog";
+import { createBlog, getBlogById, updateBlog } from "@/api/BlogAPI";
+import { useNavigate, useParams } from "react-router-dom";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateModalBlock from "@/components/Modals/CreateModalBlock";
 import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from "react";
 
 export default function CreateBlogView() {
     const navigate = useNavigate();
-    
-    const blogDraft = useAppStore(state => state.blogDraft);
+    const { id } = useParams(); 
+
+    const tags = useAppStore(state => state.tags);
     const blocks = useAppStore(state => state.blocks);
     const reg = useAppStore(state => state.regSelect);
-    const tags = useAppStore(state => state.tags);
+    const setTags = useAppStore(state => state.setTags);
+    const blogDraft = useAppStore(state => state.blogDraft);
+    const setBlocks = useAppStore(state => state.setBlocks);
     const clearFunction = useAppStore(state => state.clearFunction);
-
+    const updateDescription = useAppStore(state => state.updateDescription);
     
     const queryClient = useQueryClient();
+    const { data } = useQuery({
+        queryKey : ['blogToEdit', id],
+        queryFn : () => getBlogById(id!),
+        enabled : !!id
+    });
+    const isEdit = !!id;
+
+    useEffect(() => {
+        if (!isEdit) clearFunction();
+    }, [isEdit]);
+
+    useEffect(() => {
+        if (data && isEdit) {
+            setBlocks(data.blocks);
+            updateDescription(data.blog?.description as string);
+            setTags(data.blog?.tags || []);
+        }
+    }, [data]);
+
     const { mutate, isPending } = useMutation({
-        mutationFn : createBlog,
+        mutationFn : isEdit ? (formData) => updateBlog(id!, formData) : createBlog,
         onSuccess : () => { 
             queryClient.invalidateQueries({ queryKey : ['blogs']});
             clearFunction();

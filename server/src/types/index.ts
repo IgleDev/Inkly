@@ -12,9 +12,11 @@ export type tUserClass = Document & {
 export type tBlogClass = Document & {
     title : string,
     description : string,
+    tags : string[]
     owner : Types.ObjectId,
     published : boolean,
     reg : string,
+    updateAt : Date
 }
 
 export type tPostClass = Document & {

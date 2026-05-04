@@ -51,6 +51,12 @@ router.post('/create',
 )
 
 // * UDPATE
+router.put('/edit-blog-published/:id',
+    authenticate,
+    param('id').isMongoId().withMessage('El ID no es válido').notEmpty().withMessage('Falta el Id del blog'),
+    body('published').isBoolean().withMessage('El campo published debe ser un booleano').notEmpty().withMessage('Falta el campo published'),
+    BlogController.updateBlogPublished
+);
 
 // * PATCH
 
