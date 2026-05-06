@@ -10,6 +10,7 @@ import BlogLayout from "./layouts/BlogLayout";
 import BlogView from "./pages/blog/BlogView";
 import AccountLayout from "./layouts/AccountLayout";
 import Perfil from "./pages/account/Perfil";
+import PerfilForm from "./pages/account/PerfilForm";
 
 export default function Router() {
     return (
@@ -30,6 +31,7 @@ export default function Router() {
                 </Route>
                 <Route element={<AccountLayout />}>
                     <Route path="/perfil/:id" element={<Perfil />}></Route>
+                    <Route path="/perfil-account/:id" element={<PerfilForm />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>
