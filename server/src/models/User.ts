@@ -9,6 +9,9 @@ export const UserSchema = new Schema ({
     secondName : {
         type : String
     },
+    description : {
+        type : String
+    },
     email : {
         type : String,
         require : true,

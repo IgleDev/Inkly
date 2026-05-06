@@ -47,7 +47,7 @@ export class UserController {
 
     public static getUserById = async (req : Request, res : Response) => {
         try {
-            const user = await User.findById(req.params.id).select('name secondName email reg');
+            const user = await User.findById(req.params.id).select('name secondName description email reg');
             if (!user) {
                 const error = new Error('Usuario no encontrado');
                 return res.status(404).send({ error: error.message });
@@ -72,4 +72,27 @@ export class UserController {
             res.status(500).send({ error: 'Error del servidor' });
         }
     }
+
+    public static updateUser = async (req: Request, res: Response) => {
+        try {
+            const user = await User.findById(req.params.id);
+            const { name, secondName, description, email, reg } = req.body;
+
+            if (!user) {
+                const error = new Error('Usuario no encontrado');
+                return res.status(404).send({ error: error.message });
+            }
+
+            user.name = name;
+            user.secondName = secondName;
+            user.description = description;
+            user.email = email;
+            user.reg = reg;
+
+            await user.save();
+            res.json({ user });
+        } catch (error) {
+            res.status(500).send({ error: 'Error del servidor' });
+        }
+    };
 }

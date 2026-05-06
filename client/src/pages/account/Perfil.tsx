@@ -1,9 +1,10 @@
 import { useReg } from "@/hooks/useReg";
 import { useAuth } from "@/hooks/useAuth";
-import { useParams } from "react-router-dom";
 import { getUserById } from "@/api/AccountAPI";
 import { useQuery } from "@tanstack/react-query";
 import type { iBlogAccount } from "@/types/types";
+import { Link, useParams } from "react-router-dom";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
 
 export default function Perfil() {
@@ -25,11 +26,16 @@ export default function Perfil() {
 
   return (
     <div>
+      <div className="w-full flex justify-end">
+        <Link to={`/perfil-account/${user?._id}`}>
+          <Cog6ToothIcon className="text-gray-500 w-10 h-10" />
+        </Link>
+      </div>
       <h1 className="flex items-center gap-3 text-6xl font-bold text-[#C53F56]">
         <span className="flex items-center">{user?.name} {user?.secondName}</span>
         {reg.flag && (<img src={reg.flag} alt="Flag" className="w-14 h-14" />)}
       </h1>
-      {/* Añadir descripción de usuario */}
+      <blockquote className="text-gray-500 mt-5 border-l-4 border-gray-300 pl-4 italic">{user?.description}</blockquote>
       <div className="flex mt-5 justify-start w-full">
         {blogs?.length ? (
           <div className="flex flex-row mt-5 flex-wrap">
