@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { createAccount } from "@/api/AuthAPI";
@@ -8,14 +8,15 @@ import { useMutation } from "@tanstack/react-query";
 
 export default function RegisterForm() {
 
+  const navigate = useNavigate();
   const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: "" };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
 
   const { mutate } = useMutation({
     mutationFn : createAccount,
-    onError : (error) => (console.log(error)),
-    onSuccess : (data) => {console.log(data); reset();}
+    onError : (error) => (console.log(error), reset()),
+    onSuccess : () => { navigate('/auth/login');}
   })
 
   const handleRegister = (formData : iUserForm) => { mutate(formData); }
