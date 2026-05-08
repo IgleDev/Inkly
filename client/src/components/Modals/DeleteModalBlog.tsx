@@ -5,7 +5,7 @@ import { deleteBlog } from "@/api/BlogAPI";
 import { useNavigate, useLocation } from "react-router-dom";
 import type { iBlogAccount, iUser } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 
 interface iDeleteModalBlogProps {
@@ -37,7 +37,9 @@ export default function DeleteModalBlog({ blog, user, profileId } : iDeleteModal
 
     return (
         <div>
-            <button onClick={() => navigate(location.pathname + `?deleteBlog=true`)} className="bg-[#C53F56] text-white px-3 py-1 mt-4 mr-2 rounded-xl">Eliminar</button>
+            <button onClick={() => navigate(location.pathname + `?deleteBlog=true`)} className="flex items-center bg-[#C53F56] text-white px-3 py-1 mt-4 mr-2 rounded-xl">
+                <TrashIcon className="w-5 h-5 mr-2"/> Eliminar
+            </button>
             <Dialog open={showModal} onClose={() => navigate(location.pathname, { replace: true })} className="relative z-10">
                 <DialogBackdrop transition
                 className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"

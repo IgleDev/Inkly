@@ -1,7 +1,9 @@
-import { formatDate } from "@/helper"
-import { Link, useNavigate } from "react-router-dom"
-import type { iBlogAccount, iUser } from "@/types/types"
-import DeleteModalBlog from "../Modals/DeleteModalBlog"
+import { formatDate } from "@/helper";
+import { Link, useNavigate } from "react-router-dom";
+import DeleteModalBlog from "../Modals/DeleteModalBlog";
+import type { iBlogAccount, iUser } from "@/types/types";
+import ChevronRightIcon from "@heroicons/react/24/outline/esm/ChevronRightIcon";
+import { CalendarDateRangeIcon, PencilIcon } from "@heroicons/react/16/solid";
 
 interface iBlogResumeCardProps {
   blog : iBlogAccount,
@@ -29,28 +31,38 @@ export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlo
           </div>
         </Link>
         {isOwner && ( 
-          <div className="flex">
-            <DeleteModalBlog blog={blog} user={user} profileId={profileId}/>
-            {!blog.published && (
-              <button className="bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl" onClick={() => navigate(`/new/edit-blog/${blog._id}`)}>Editar</button>
-            )}
-          </div>
+          <>
+            <div className="flex">
+              <DeleteModalBlog blog={blog} user={user} profileId={profileId}/>
+              {!blog.published && (
+                <button className="flex items-center bg-[#FFAA50] text-white px-3 py-1 mt-4 mr-2 rounded-xl" onClick={() => navigate(`/new/edit-blog/${blog._id}`)}>
+                  <PencilIcon className="w-5 h-5 mr-2" /> Editar
+                </button>
+              )}
+            </div>
+            <p className="mt-10 text-gray-500 ">
+              {blog?.createdAt && location === `/perfil/${profileId}` && (
+                <div>
+                  <div className="flex items-center">
+                    <CalendarDateRangeIcon className="w-6 h-6 mr-2"/>
+                    {blog.updatedAt !== blog.createdAt ? 'Actualizado el ' : 'Creado el '}
+                    {blog.updatedAt !== blog.createdAt ? formatDate(blog.updatedAt) : formatDate(blog.createdAt)}
+                  </div>
+                  <span className={`inline-flex items-center gap-2 px-2 py-0.5 mt-5 rounded-full text-xs font-semibold ${blog.published? 'bg-green-100 text-green-700'
+                    : 'bg-gray-200 text-gray-600'}`}>
+                      <span
+                        className={`w-2 h-2 rounded-full ${blog.published ? 'bg-green-500' : 'bg-gray-400'}`}
+                      />
+                      {blog.published ? 'Publicado' : 'Borrador'}
+                  </span>
+                </div>
+              )}
+            </p>
+          </>
         )}
-        <p className="mt-5 text-gray-500 ">
-          {blog?.createdAt && location === `/perfil/${profileId}` && (
-            <>
-              {blog.updatedAt !== blog.createdAt ? 'Actualizado el ' : 'Creado el '}
-              {blog.updatedAt !== blog.createdAt ? formatDate(blog.updatedAt) : formatDate(blog.createdAt)} 
-              <span className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs font-semibold ${blog.published? 'bg-green-100 text-green-700'
-                : 'bg-gray-200 text-gray-600'}`}>
-                  <span
-                    className={`w-2 h-2 rounded-full ${blog.published ? 'bg-green-500' : 'bg-gray-400'}`}
-                  />
-                  {blog.published ? 'Publicado' : 'Borrador'}
-              </span>
-            </>
-          )}
-        </p>
+        <span className="flex justify-end">
+          <ChevronRightIcon className="h-6 w-6 mt-5 text-gray-500" />
+        </span>
       </div>
     </div>
   )

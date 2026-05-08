@@ -8,7 +8,7 @@ import type { iBlogAccount } from "@/types/types";
 import { useAppStore } from "@/stores/useAppStore";
 import { getAllBlogs, getBlogsByTags } from "@/api/BlogAPI";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { FolderPlusIcon, MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/outline";
 
 export default function Home() {
     const { data : user, isError, isLoading : authLoading } = useAuth();
@@ -43,11 +43,15 @@ export default function Home() {
         <>  
             <nav className="flex justify-between pt-10 p-4">
                 <div>
-                    {user?.name && <p className="text-3xl font-bold">Bienvenido <span className="text-[#C53F56]">{user.name}</span></p>}
+                    {user?.name && <p className="text-3xl font-bold">Bienvenido <span className="text-[#C53F56]">{user.name} </span>👋</p>}
                 </div>
                 <div className="flex">
-                    <Button url={user ? `/perfil/${user._id}` : '#'} text="Ver Perfil" />
-                    <Button url={user ? '/new/create-blog' : '#'} text="Crear Blog" />
+                    <Button url={user ? `/perfil/${user._id}` : '#'}>
+                        <UserIcon className="w-5 h-5 inline mr-2"/> Ver Perfil 
+                    </Button>
+                    <Button url={user ? '/new/create-blog' : '#'}>
+                        <FolderPlusIcon className="w-5 h-5 inline mr-2"/> Crear Blog
+                    </Button>
                 </div>
             </nav>
             <main>

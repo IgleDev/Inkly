@@ -4,7 +4,7 @@ import { type tBlockType } from "@/types/types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppStore } from "@/stores/useAppStore";
 import { BlockSelection } from "@/types/helperTypes";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export default function ModalBlock() {
@@ -44,8 +44,8 @@ export default function ModalBlock() {
     return (
         <div>
             <button onClick={handleOpen}
-                className="rounded-md bg-white/10 px-2.5 py-1.5 text-2xl font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">
-                Agregar Bloque
+                className="flex items-center rounded-md bg-white/10 px-2.5 py-1.5 text-2xl font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">
+                <PlusCircleIcon className="w-10 h-10 mr-2" /> Agregar Bloque
             </button>
             <Dialog open={showModal} onClose={handleClose} className="relative z-10">
                 <DialogBackdrop transition
