@@ -1,16 +1,17 @@
+import { useEffect } from "react";
 import { uploadImage } from "@/api/UploadAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import TagBlog from "@/components/blog/TagBlog";
 import TeamBlog from "@/components/blog/TeamBlog";
 import { useAppStore } from "@/stores/useAppStore";
 import TitleBlog from "@/components/blog/TitleBlog";
-import { createBlog, getBlogById, updateBlog } from "@/api/BlogAPI";
 import { useNavigate, useParams } from "react-router-dom";
+import { ArrowUpTrayIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
+import { createBlog, getBlogById, updateBlog } from "@/api/BlogAPI";
 import CreateModalBlock from "@/components/Modals/CreateModalBlock";
 import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from "react";
 
 export default function CreateBlogView() {
     const navigate = useNavigate();
@@ -102,12 +103,12 @@ export default function CreateBlogView() {
                             <TagBlog />
                             <div className="flex gap-4">
                                 <button onClick={() => handlePublish(true)} disabled={isPending} 
-                                    className="bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
-                                    {isPending ? 'Publicando...' : 'Publicar'}
+                                    className="flex bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
+                                    <ArrowUpTrayIcon className="h-6 w-6 mr-2" /> {isPending ? 'Publicando...' : 'Publicar'}
                                 </button>
                                 <button onClick={() => handlePublish(false)} disabled={isPending} 
-                                    className="bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
-                                    {isPending ? 'Guardando...' : 'Guardar'}
+                                    className="flex bg-[#1f387f] text-white px-4 py-2 rounded-full mt-5 hover:bg-[#3764e2] w-full transition-colors">
+                                    <BookmarkIcon className="h-6 w-6 mr-2"/> {isPending ? 'Guardando...' : 'Guardar'}
                                 </button>
                             </div>
                         </div>

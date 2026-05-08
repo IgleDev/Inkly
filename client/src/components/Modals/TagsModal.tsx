@@ -2,7 +2,7 @@
 
 import { useAppStore } from "@/stores/useAppStore";
 import { useLocation, useNavigate } from "react-router-dom";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { InformationCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { maxLengths } from "@/helper";
@@ -30,8 +30,8 @@ export default function TagsModal() {
 
     return (
         <div>
-            <button onClick={handleOpen} className="text-sm text-black border border-[#1f387f] px-5 py-1 rounded-full transition-colors mb-4">
-                Añadir Tag
+            <button onClick={handleOpen} className="flex items-center text-sm text-black border border-[#1f387f] px-5 py-1 rounded-full transition-colors mb-4">
+                <PlusCircleIcon className="w-6 h-6 text-[#1f387f] mr-2" /> Añadir Tag
             </button>
             <Dialog open={showModal} onClose={handleClose} className="relative z-10">
                 <DialogBackdrop transition
