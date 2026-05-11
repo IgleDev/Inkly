@@ -2,6 +2,7 @@ import api from "@/lib";
 import type { iBlogRead } from "@/types/types";
 import { axiosError, getToken } from "@/helper";
 import type { iBlogFormData } from "@/types/helperTypes";
+import { blogReadSchema, blogsResponseSchema } from "@/schema/schemas";
 
 export async function createBlog(formData : iBlogFormData) {
     try {
@@ -32,7 +33,10 @@ export async function getAllBlogs(reg : string) {
         if(!data) {
             throw new Error('No se han podido obtener los blogs');
         }
-        return data;
+        const response = blogsResponseSchema.safeParse(data);
+        if(response.success) {
+            return response.data;
+        }
     } catch (error) {
         axiosError(error);
     }
@@ -44,7 +48,10 @@ export async function getBlogsByTags(reg : string, tag : string) {
         const { data } = await api.get(url, {
             params : { reg, tag }
         })
-        return data;
+        const response = blogsResponseSchema.safeParse(data);
+        if(response.success) {
+            return response.data;
+        }
     } catch (error) {
         axiosError(error);
     }
@@ -53,12 +60,11 @@ export async function getBlogsByTags(reg : string, tag : string) {
 export async function getBlogById(id : string) {
     try {
         const url = `/blog/${id}`;
-        const { data } = await api.get<iBlogRead>(url, {
-            headers : {
-                Authorization : `Bearer ${getToken()}`
-            }
-        });
-        return data;
+        const { data } = await api.get<iBlogRead>(url);
+        const response = blogReadSchema.safeParse(data);
+        if(response.success) {
+            return response.data;
+        }
     } catch (error) {
         axiosError(error);
     }

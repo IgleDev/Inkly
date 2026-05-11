@@ -24,6 +24,10 @@ export const blogSchema = z.object({
     updatedAt : z.string(),
 })
 
+export const blogsResponseSchema = z.object({
+    blogs: z.array(blogSchema)
+});
+
 // Heading Schema
 export const headingBlock = z.object({
   type: z.literal("heading"),
