@@ -6,7 +6,7 @@ import type { BLOCK_TYPES } from "./helperTypes";
 export type iUser = z.infer<typeof userSchema>;
 export type iUserFormLogin = Pick<iUser, 'email' | 'password'>;
 export type iUserForm = Pick<iUser, 'name' | 'secondName' | 'email' | 'password' | 'reg'>;
-export type iUserFormEdit = Pick<iUser, 'name' | 'secondName' | 'description' | 'email' | 'reg'>;
+export type iUserFormEdit = Pick<iUser, 'name' | 'secondName' | 'description' | 'email' | 'reg' | "photoProfile">;
 
 // Blogs
 export type iBlog = z.infer<typeof blogSchema>;

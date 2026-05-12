@@ -47,7 +47,7 @@ export class UserController {
 
     public static getUserById = async (req : Request, res : Response) => {
         try {
-            const user = await User.findById(req.params.id).select('name secondName description email reg');
+            const user = await User.findById(req.params.id).select('name secondName description email reg photoProfile');
             if (!user) {
                 const error = new Error('Usuario no encontrado');
                 return res.status(404).send({ error: error.message });
@@ -76,7 +76,7 @@ export class UserController {
     public static updateUser = async (req: Request, res: Response) => {
         try {
             const user = await User.findById(req.params.id);
-            const { name, secondName, description, email, reg } = req.body;
+            const { name, secondName, description, email, reg, photoProfile } = req.body;
 
             if (!user) {
                 const error = new Error('Usuario no encontrado');
@@ -88,6 +88,7 @@ export class UserController {
             user.description = description;
             user.email = email;
             user.reg = reg;
+            user.photoProfile = photoProfile
 
             await user.save();
             res.json({ user });

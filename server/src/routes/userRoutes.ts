@@ -54,6 +54,7 @@ router.put('/edit-profile-account/:id',
     body('description').optional().isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),
     body('email').isEmail().withMessage('El email no tiene un formato correcto').notEmpty().withMessage('No puede estar vacio').trim(),
     body('reg').isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),
+    body('photoProfile').optional().isString().withMessage('No puede ser un entero'),
     handleInputErrors,
     UserController.updateUser
 )

@@ -25,6 +25,10 @@ export const UserSchema = new Schema ({
     reg : {
         type : String,
         require : true
+    },
+    photoProfile : {
+        type : String,
+        require : false
     }
 }, { timestamps : true });
 

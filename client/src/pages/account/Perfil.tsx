@@ -31,10 +31,15 @@ export default function Perfil() {
           <Cog6ToothIcon className="text-gray-500 w-10 h-10" />
         </Link>
       </div>
-      <h1 className="flex items-center gap-3 text-6xl font-bold text-[#C53F56]">
-        <span className="flex items-center">{user?.name} {user?.secondName}</span>
-        {reg.flag && (<img src={reg.flag} alt="Flag" className="w-14 h-14" />)}
-      </h1>
+      <div className="flex items-center mb-10">
+        <img src={user?.photoProfile} alt={`Photo of ${user?.name}`} className="w-16 h-16 mr-5"/> 
+        <h1 className="flex items-center gap-3 text-6xl font-bold text-[#C53F56]">
+          <span className="flex items-center">
+            {user?.name} {user?.secondName}
+          </span>
+          {reg.flag && (<img src={reg.flag} alt="Flag" className="w-14 h-14" />)}
+        </h1>
+      </div>
       <blockquote className="text-gray-500 mt-5 border-l-4 border-gray-300 pl-4 italic">{user?.description}</blockquote>
       <div className="flex mt-5 justify-start w-full">
         {blogs?.length ? (
