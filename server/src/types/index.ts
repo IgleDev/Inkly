@@ -8,6 +8,7 @@ export type tUserClass = Document & {
     email : string,
     password : string,
     reg : string,
+    photoProfile : string
 }
 
 export type tBlogClass = Document & {
