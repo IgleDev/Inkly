@@ -89,7 +89,9 @@ export const accountSchema = z.object({
 export const blogReadSchema = z.object({
     blog: blogSchema.extend({
         owner: z.object({
-            name: z.string()
+            _id : z.string(),
+            name: z.string(),
+            photoProfile: z.string()
         })
     }),
     blocks: z.array(blockSchema),
