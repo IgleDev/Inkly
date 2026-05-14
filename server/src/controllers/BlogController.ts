@@ -73,7 +73,7 @@ export class BlogController {
         try {
             const { id } = req.params;
 
-            const blog = await Blog.findById(id).populate('owner', 'name -_id');
+            const blog = await Blog.findById(id).populate('owner', 'name photoProfile _id');
             if (!blog) {
                 return res.status(404).json({ error: 'No se encontró ningún blog asociado a ese ID' });
             }
