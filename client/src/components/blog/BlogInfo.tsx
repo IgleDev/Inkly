@@ -1,13 +1,29 @@
+import { useState } from "react";
 import { formatDate } from "@/helper";
-import { Link } from "react-router-dom";
 import type { iBlogRead } from "@/types/types"
-import { CalendarDateRangeIcon } from "@heroicons/react/16/solid";
+import { Link, useParams } from "react-router-dom";
+import { CalendarDateRangeIcon, ShareIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/16/solid";
 
 interface iBlogInfoProps {
     blog : iBlogRead['blog'];
 }
 
 export default function BlogInfo({ blog } : iBlogInfoProps) {
+  const { id } = useParams();
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/blog/${id}`;
+
+    if (navigator.share) {
+      await navigator.share({ title: blog.title, url: shareUrl });
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
     <>
         <div className="flex justify-between items-center">
@@ -27,7 +43,16 @@ export default function BlogInfo({ blog } : iBlogInfoProps) {
                 ))}
             </div>
         </div>
-        <p className="flex items-center text-sm font-semibold text-gray-400 mt-10"><CalendarDateRangeIcon className="w-6 h-6 mr-2"/> Creado el {formatDate(blog?.createdAt)}</p>
+        <p className="flex items-center text-sm font-semibold text-gray-400 mt-10">
+            <CalendarDateRangeIcon className="w-6 h-6 mr-2"/> Creado el {formatDate(blog?.createdAt)}
+        </p>
+
+        <button onClick={handleShare} className="flex items-center gap-2 mt-6 text-sm font-semibold text-gray-400 transition-colors cursor-pointer">
+            {copied
+                ? <><ClipboardDocumentCheckIcon className="w-5 h-5 text-green-400"/> <span className="text-green-400">¡Enlace copiado!</span></>
+                : <><ShareIcon className="w-5 h-5"/> Compartir</>
+            }
+        </button>
     </>
   )
 }
