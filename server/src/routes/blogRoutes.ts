@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { maxLengths } from "../utils";
 import { body, param, query } from "express-validator";
-import { authenticate } from "../middleware/authenticate";
 import { handleInputErrors } from "../middleware/validate";
 import { BlogController } from "../controllers/BlogController";
-import { maxLengths } from "../utils";
+import { authenticate, optionalAuthenticate } from "../middleware/authenticate";
 
 const router = Router();
 
@@ -27,6 +27,7 @@ router.get('/filter-by-tags',
 );
 
 router.get('/:id',
+    optionalAuthenticate,
     param('id').isMongoId().withMessage('ID de blog no válido').notEmpty().withMessage('ID de blog es obligatorio'),
     BlogController.getBlogById
 )
@@ -48,6 +49,12 @@ router.post('/create',
     body('post.tags.*').isString().withMessage('Los tags deben ser texto').isLength({ max: maxLengths.BLOCK_TAG }).withMessage('Los tags no pueden exceder de los caracteres puestos'),
     handleInputErrors,
     BlogController.createBlog
+)
+
+router.post('/save-blog',
+    authenticate,
+    body('blogId').isMongoId().withMessage('ID de blog no válido').notEmpty().withMessage('ID de blog es obligatorio'),
+    BlogController.setSavedBlog
 )
 
 // * UDPATE

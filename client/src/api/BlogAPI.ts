@@ -63,6 +63,7 @@ export async function getBlogById(id : string) {
         const { data } = await api.get<iBlogRead>(url);
         const response = blogReadSchema.safeParse(data);
         if(response.success) {
+            console.log(response.data);
             return response.data;
         }
     } catch (error) {
@@ -88,6 +89,20 @@ export async function deleteBlog(id : string) {
     try {
         const url = `/blog/delete/${id}?deleteBlog=true`;
         const { data } = await api.delete(url, {
+            headers : {
+                Authorization : `Bearer ${getToken()}`
+            }
+        });
+        return data;
+    } catch (error) {
+        axiosError(error);
+    }
+}
+
+export async function saveBlog(blogId : string) {
+    try {
+        const url = '/blog/save-blog';
+        const { data } = await api.post(url, { blogId }, {
             headers : {
                 Authorization : `Bearer ${getToken()}`
             }

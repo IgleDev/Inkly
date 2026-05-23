@@ -29,7 +29,11 @@ export const UserSchema = new Schema ({
     photoProfile : {
         type : String,
         require : false
-    }
+    },
+    savedBlogs : [{
+        type : Schema.Types.ObjectId,
+        ref : 'Blog'
+    }]
 }, { timestamps : true });
 
 const User = mongoose.model<tUserClass>('User', UserSchema);

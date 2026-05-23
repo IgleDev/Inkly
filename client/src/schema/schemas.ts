@@ -10,6 +10,7 @@ export const userSchema = z.object({
     email : z.string(),
     password : z.string(),
     reg : z.string(),
+    savedBlogs : z.array(z.string())
 })
 
 // Blog Schema
@@ -95,5 +96,6 @@ export const blogReadSchema = z.object({
         })
     }),
     blocks: z.array(blockSchema),
-    author: z.string().nullable()
+    author: z.string().nullable(),
+    isSaved : z.boolean()
 });
