@@ -1,6 +1,6 @@
 import { z } from "zod"
-import type { accountSchema, blockSchema, blogReadSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
 import type { BLOCK_TYPES } from "./helperTypes";
+import type { accountSchema, blockSchema, blogReadSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
 
 // Usuarios
 export type iUser = z.infer<typeof userSchema>;

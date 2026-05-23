@@ -35,3 +35,17 @@ export const authenticate = async(req : Request, res : Response, next : NextFunc
         return res.status(500).json({error : 'Token no valido'})
     }
 }
+
+export const optionalAuthenticate = async (req: Request, res: Response, next: NextFunction) => {
+    const bearer = req.headers.authorization;
+    if (!bearer) return next();
+    const [, token] = bearer.split(' ');
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (typeof decoded === 'object' && decoded.payload.id) {
+            const user = await User.findById(decoded.payload.id).select('_id name email');
+            if (user) req.user = user;
+        }
+    } catch {}
+    next();
+}

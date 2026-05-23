@@ -18,7 +18,7 @@ export default function BlogContent({ data } : iBlogContentProps) {
         </article>
         <article className="col-span-3 flex flex-col">
           <div className="sticky top-5">
-            <BlogInfo blog={blog}/>
+            <BlogInfo blog={blog} isSaved={data.isSaved}/>
           </div>
         </article>
       </section>

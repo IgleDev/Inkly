@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Blog from '../models/Blog';
 import Post from '../models/Post';
 import type { Request, Response } from 'express'
+import User from '../models/User';
 
 export class BlogController {
     public static async createBlog(req : Request, res : Response) {
@@ -72,6 +73,7 @@ export class BlogController {
     public static async getBlogById(req: Request, res: Response) {
         try {
             const { id } = req.params;
+            const userId = req.user?._id;
 
             const blog = await Blog.findById(id).populate('owner', 'name photoProfile _id');
             if (!blog) {
@@ -79,11 +81,17 @@ export class BlogController {
             }
 
             const post = await Post.findOne({ blog: id }).populate('author', 'name');
+            let isSaved = false;
+            if(userId) {
+                const user = await User.findById(userId).select('savedBlogs');
+                isSaved = user.savedBlogs.some(savedId => savedId.toString() === id) ?? false;
+            }
             
             res.json({
                 blog,
                 blocks: post?.blocks || [],
-                author: (post?.author as any)?.name || null
+                author: (post?.author as any)?.name || null,
+                isSaved
             });
         } catch (error) {
             res.status(500).json({ error: 'Error al obtener el blog' });
@@ -145,6 +153,36 @@ export class BlogController {
             res.status(500).json({error : 'Error al eliminar el blog'});
         } finally {
             session.endSession();
+        }
+    }
+
+    public static async setSavedBlog(req : Request, res : Response) {
+        const { blogId } = req.body;
+        const userId = req.user?._id;
+        try {
+            if(!userId) {
+                const error = new Error('No se encontró al usuario');
+                return res.status(401).json({ error : error.message });
+            }
+            const blog = await Blog.findById(blogId);
+            if(!blog) {
+                const error = new Error('No se encontró el blog');
+                return res.status(404).json({ error : error.message });
+            }
+            const user = await User.findById(userId);
+            const alreadySaved = user.savedBlogs.some((id : any) => id.toString() === blogId);
+            
+            if(alreadySaved) {
+                user.savedBlogs = user.savedBlogs.filter((id : any) => id.toString() !== blogId);
+                await user.save();
+                return res.json({ isSaved: false, message: 'Blog eliminado de guardados' });
+            } else {
+                user.savedBlogs.push(blogId);
+                await user.save();
+                return res.json({ isSaved: true, message: 'Blog guardado correctamente' });
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error al guardar el blog' });
         }
     }
 }
