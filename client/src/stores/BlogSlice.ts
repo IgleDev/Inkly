@@ -11,6 +11,7 @@ export interface iBlogState {
     selectRadioBlock : (blockType : tBlockType) => void,
     addRadioBlock : (blockType : tBlockType, inputValue : string, description : string, file? : File) => void,
     updateBlock : (order : number, value : string, file? : File) => void,
+    deleteBlock : (order : number) => void,
     modal : boolean,
     openModal : () => void,
     modalUpload: boolean,
@@ -64,6 +65,11 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
         set((state) => ({
             blocks : state.blocks.map(block => block.order === order ? {...block, value, ...(file && { file }) } : block)
         }))
+    },
+    deleteBlock : (order : number) => {
+        set((state) => ({
+            blocks : state.blocks.filter(block => block.order !== order)
+        }));
     },
     modal : false,
     openModal : () => set({modal : true}),
