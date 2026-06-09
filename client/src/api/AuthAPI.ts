@@ -1,9 +1,9 @@
 import api from "@/lib";
-import type { iUserForm, iUserFormLogin } from "@/types/types";
+import type { iUserFormData, iUserFormLogin } from "@/types/types";
 import { userSchema } from "@/schema/schemas";
 import { axiosError } from "@/helper";
 
-export async function createAccount(formData : iUserForm) {
+export async function createAccount(formData : iUserFormData) {
     try {
         const url = `/users`;
         const { data } = await api.post<string>(url, formData);
