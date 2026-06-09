@@ -99,3 +99,15 @@ export const blogReadSchema = z.object({
     author: z.string().nullable(),
     isSaved : z.boolean()
 });
+
+export const userFormSchema = userSchema.pick({
+  name: true,
+  secondName: true,
+  email: true,
+  password: true,
+  reg: true,
+}).extend({
+  privacidad: z.boolean().refine(val => val === true, {
+    message: "Debes aceptar la política de privacidad"
+  })
+});

@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 export default function RegisterForm() {
 
   const navigate = useNavigate();
-  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: "" };
+  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: "", privacidad : false };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
 
@@ -19,7 +19,11 @@ export default function RegisterForm() {
     onSuccess : () => { navigate('/auth/login');}
   })
 
-  const handleRegister = (formData : iUserForm) => { mutate(formData); }
+  const handleRegister = (formData: iUserForm) => {
+    const { privacidad: _, ...rest } = formData;
+    void _;
+    mutate(rest);
+  }
 
   return (
     <>
@@ -119,6 +123,47 @@ export default function RegisterForm() {
             <ErrorMessage>{errors.reg.message}</ErrorMessage>
           )}
         </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800 leading-relaxed">
+          <p>
+            Tus datos (nombre, apellidos, email, foto, biografía, contraseña y región) serán tratados por{" "}
+            <strong>Inkly</strong> para gestionar tu acceso a la plataforma.
+            Base jurídica: ejecución de un contrato (Art. 6.1.b RGPD). No cedemos datos
+            a terceros salvo obligación legal. Puedes ejercer tus derechos escribiendo a{" "}
+            <a href="mailto: adriiglesias2016@gmail.com" className="underline font-semibold">
+              adriiglesias2016@gmail.com
+            </a>
+            . Más info en nuestra{" "}
+            <Link to="/privacidad" className="underline font-semibold">
+              Política de Privacidad
+            </Link>
+            .
+          </p>
+        </div>
+
+        <div className="flex items-start gap-3">
+          <input
+            id="privacidad"
+            type="checkbox"
+            className="mt-1 w-4 h-4 accent-[#C53F56] cursor-pointer flex-shrink-0"
+            {...register("privacidad", {
+              required: "Debes aceptar la política de privacidad para continuar",
+            })}
+          />
+          <label htmlFor="privacidad" className="text-sm text-gray-600 cursor-pointer">
+            He leído y acepto la{" "}
+            <Link to="/privacidad" className="text-[#C53F56] font-semibold underline">
+              Política de Privacidad
+            </Link>{" "}
+            y los{" "}
+            <Link to="/terminos" className="text-[#C53F56] font-semibold underline">
+              Términos y Condiciones
+            </Link>
+            .{" "}
+            <span className="text-red-500">*</span>
+          </label>
+        </div>
+        {errors.privacidad && <ErrorMessage>{errors.privacidad.message}</ErrorMessage>}
 
         <input
           type="submit"

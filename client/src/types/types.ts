@@ -1,11 +1,12 @@
 import { z } from "zod"
 import type { BLOCK_TYPES } from "./helperTypes";
-import type { accountSchema, blockSchema, blogReadSchema, blogSchema, postSchema, userSchema } from "@/schema/schemas"
+import type { accountSchema, blockSchema, blogReadSchema, blogSchema, postSchema, userFormSchema, userSchema } from "@/schema/schemas"
 
 // Usuarios
 export type iUser = z.infer<typeof userSchema>;
 export type iUserFormLogin = Pick<iUser, 'email' | 'password'>;
-export type iUserForm = Pick<iUser, 'name' | 'secondName' | 'email' | 'password' | 'reg'>;
+export type iUserForm = z.infer<typeof userFormSchema>;
+export type iUserFormData = Omit<iUserForm, 'privacidad'>;
 export type iUserFormEdit = Pick<iUser, 'name' | 'secondName' | 'description' | 'email' | 'reg' | "photoProfile">;
 
 // Blogs
