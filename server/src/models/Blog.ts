@@ -23,6 +23,11 @@ export const BlogSchema = new Schema ({
     },
     reg : {
         type : String,
+    },
+    team: {
+        type: Schema.Types.ObjectId,
+        ref: "Team",
+        required: true
     }
 }, { timestamps : true });
 

@@ -4,7 +4,7 @@ import { tUserClass } from "../types";
 export const UserSchema = new Schema ({
     name : {
         type : String,
-        require : true,
+        required : true,
     },
     secondName : {
         type : String
@@ -14,21 +14,21 @@ export const UserSchema = new Schema ({
     },
     email : {
         type : String,
-        require : true,
+        required : true,
         trim : true,
         unique : true
     },
     password : {
         type : String,
-        require : true,
+        required : true,
     },
     reg : {
         type : String,
-        require : true
+        required : true
     },
     photoProfile : {
         type : String,
-        require : false
+        required : false
     },
     savedBlogs : [{
         type : Schema.Types.ObjectId,

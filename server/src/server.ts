@@ -1,13 +1,11 @@
 import cors from 'cors';
 import path from 'path';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
 import { connectionDB } from './config/db';
 import userRouter from './routes/userRoutes';
 import blogRouter from './routes/blogRoutes';
 import uploadRouter from './routes/uploadRoutes'; 
-
-dotenv.config();
 
 connectionDB();
 

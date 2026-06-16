@@ -3,6 +3,7 @@ import Blog from '../models/Blog';
 import Post from '../models/Post';
 import type { Request, Response } from 'express'
 import User from '../models/User';
+import Team from '../models/Team';
 
 export class BlogController {
     public static async createBlog(req : Request, res : Response) {
@@ -18,28 +19,43 @@ export class BlogController {
                 return res.status(401).json({ error : error.message });
             }
 
+            const team = new Team({
+                name: `${title}`,
+                owner: userId
+            });
+            
             const blog = new Blog({ 
                 title, 
                 description, 
                 tags,
                 owner : userId, 
                 published, 
-                reg 
+                reg,
+                team : team._id
             })
+            
+            team.blog = blog._id;
+            
+            await team.save({ session });
             await blog.save({ session });
-
+            
             const newPost = new Post({
                 blocks : post.blocks,
                 blog : blog._id,
                 author : userId
             })
-
+            
             await newPost.save({ session })
             await session.commitTransaction();
             res.json({blog : blog[0], post : newPost[0]});
         } catch (error) {
             await session.abortTransaction();
-            res.status(500).json({error : 'Error al crear el blog'});
+            console.error("ERROR REAL EN CREATE_BLOG:", error);
+
+            return res.status(500).json({ 
+                error: 'Error al crear el blog',
+                message: error.message // Te enviará el texto exacto del fallo al frontend
+            });
         } finally {
             session.endSession();
         }

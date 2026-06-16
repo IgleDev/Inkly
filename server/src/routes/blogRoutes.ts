@@ -34,10 +34,14 @@ router.get('/:id',
 
 // * POST
 
+// * POST del BACKEND modificado
 router.post('/create',
     authenticate,
+    body('reg').isString().notEmpty().withMessage('La región es obligatoria'), 
     body('title').isString().withMessage('No puede ser un número').notEmpty().withMessage('No puede estar vacío').isLength({ max: maxLengths.BLOG_TITLE }).withMessage('El título del blog no puede exceder de los caracteres puestos'),
     body('description').optional().isString().withMessage('La descripción debe ser texto').isLength({ max: maxLengths.BLOG_DESCRIPTION }).withMessage('La descripción del bloque no puede exceder de los caracteres puestos'),
+    body('tags').optional().isArray({ max: 3 }).withMessage('Solo puedes añadir un máximo de 3 tags'),
+    body('tags.*').isString().withMessage('Los tags deben ser texto').isLength({ max: maxLengths.BLOCK_TAG }).withMessage('Los tags no pueden exceder de los caracteres puestos'),
     body('post.blocks').isArray({ min : 1}).withMessage('Debes tener al menos un elemento añadido en el Blog'),
     body('post.blocks.*.type').isIn(['heading', 'paragraph', 'image', 'video', 'quote']).withMessage('Tipo de bloque no válido'),
     body('post.blocks.*.value').optional().notEmpty().withMessage('El valor del bloque no puede estar vacío'),
@@ -45,8 +49,6 @@ router.post('/create',
     body('post.blocks.*.paragraph').optional().isLength({ max: maxLengths.BLOCK_PARAGRAPH }).withMessage('El párrafo no puede exceder de los caracteres puestos'),
     body('post.blocks.*.quote').optional().isLength({ max: maxLengths.BLOCK_QUOTE }).withMessage('La cita no puede exceder de los caracteres puestos'),
     body('post.blocks.*.imageDescription').optional().isLength({ max: maxLengths.BLOCK_IMAGE_DESCRIPTION }).withMessage('La descripción de la imagen no puede exceder de los caracteres puestos'),
-    body('post.tags').optional().isArray({ max: 3 }).withMessage('Solo puedes añadir un máximo de 3 tags'),
-    body('post.tags.*').isString().withMessage('Los tags deben ser texto').isLength({ max: maxLengths.BLOCK_TAG }).withMessage('Los tags no pueden exceder de los caracteres puestos'),
     handleInputErrors,
     BlogController.createBlog
 )
