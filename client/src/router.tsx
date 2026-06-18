@@ -39,7 +39,7 @@ export default function Router() {
                 <Route element={<InfoAppLayout />}>
                     <Route path="/privacidad" element={<Privacidad />}></Route>
                 </Route>
-                <Route path="/users/team-invitation/:token" element={<TeamInvitationPage />} />
+                <Route path="/team/team-invitation/:token" element={<TeamInvitationPage />} />
             </Routes>
         </BrowserRouter>
     )

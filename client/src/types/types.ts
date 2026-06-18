@@ -8,6 +8,7 @@ export type iUserFormLogin = Pick<iUser, 'email' | 'password'>;
 export type iUserForm = z.infer<typeof userFormSchema>;
 export type iUserFormData = Omit<iUserForm, 'privacidad'>;
 export type iUserFormEdit = Pick<iUser, 'name' | 'secondName' | 'description' | 'email' | 'reg' | "photoProfile">;
+export type iUserAddTeam = Pick<iUser, 'email'>;
 
 // Blogs
 export type iBlog = z.infer<typeof blogSchema>;
