@@ -22,6 +22,7 @@ export const blogSchema = z.object({
     owner : z.string(),
     published : z.boolean(),
     reg : z.string(),
+    team : z.string().optional(),
     createdAt : z.string(),
     updatedAt : z.string(),
 })
@@ -95,6 +96,13 @@ export const blogReadSchema = z.object({
             photoProfile: z.string()
         })
     }),
+    team: z.array(
+        z.object({
+            _id: z.string(),
+            name: z.string(),
+            photoProfile: z.string().optional()
+        })
+    ),
     blocks: z.array(blockSchema),
     author: z.string().nullable(),
     isSaved : z.boolean()

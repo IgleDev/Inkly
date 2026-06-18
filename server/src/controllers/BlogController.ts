@@ -4,6 +4,7 @@ import Post from '../models/Post';
 import type { Request, Response } from 'express'
 import User from '../models/User';
 import Team from '../models/Team';
+import TeamMembership from "../models/TeamMembership";
 
 export class BlogController {
     public static async createBlog(req : Request, res : Response) {
@@ -96,6 +97,13 @@ export class BlogController {
                 return res.status(404).json({ error: 'No se encontró ningún blog asociado a ese ID' });
             }
 
+            const memberships = await TeamMembership.find({ team: blog.team }).populate('user', 'name photoProfile _id');
+            const team = memberships.map(m => ({
+                _id: (m.user as any)._id,
+                name: (m.user as any).name,
+                photoProfile: (m.user as any).photoProfile
+            }));
+
             const post = await Post.findOne({ blog: id }).populate('author', 'name');
             let isSaved = false;
             if(userId) {
@@ -105,6 +113,7 @@ export class BlogController {
             
             res.json({
                 blog,
+                team,
                 blocks: post?.blocks || [],
                 author: (post?.author as any)?.name || null,
                 isSaved

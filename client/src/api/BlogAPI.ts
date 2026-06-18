@@ -23,22 +23,22 @@ export async function createBlog(formData : iBlogFormData) {
     }
 }
 
-export async function getAllBlogs(reg : string) {
+export async function getAllBlogs(reg: string) {
     try {
-        const url = '/blog/';
+        const url = "/blog/";
         const { data } = await api.get(url, {
-            params : { reg }
+            params: { reg }
         });
-        
-        if(!data) {
-            throw new Error('No se han podido obtener los blogs');
-        }
+
         const response = blogsResponseSchema.safeParse(data);
-        if(response.success) {
-            return response.data;
+
+        if (!response.success) {
+            throw new Error("Respuesta inválida");
         }
+
+        return response.data;
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 
@@ -61,11 +61,13 @@ export async function getBlogById(id : string) {
     try {
         const url = `/blog/${id}`;
         const { data } = await api.get<iBlogRead>(url);
+            console.log("DATA:", data);
         const response = blogReadSchema.safeParse(data);
-        if(response.success) {
-            console.log(response.data);
-            return response.data;
+        if (!response.success) {
+            console.error(response.error.format()); // verás exactamente qué campo falla
+            throw new Error('Respuesta del servidor no válida');
         }
+return response.data;
     } catch (error) {
         axiosError(error);
     }
