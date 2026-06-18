@@ -19,7 +19,8 @@ export type tBlogClass = Document & {
     owner : Types.ObjectId,
     published : boolean,
     reg : string,
-    updateAt : Date
+    updateAt : Date,
+    team : Types.ObjectId
 }
 
 export type tPostClass = Document & {
@@ -28,4 +29,26 @@ export type tPostClass = Document & {
     tags : string[],
     blog : Types.ObjectId,
     author :Types.ObjectId
+}
+
+export interface tTeamClass extends Document {
+    name : string;
+    owner : Types.ObjectId;
+    blog : Types.ObjectId;
+}
+
+export interface tTeamMembershipClass extends Document {
+    user : Types.ObjectId;
+    team : Types.ObjectId;
+    role : "member" | "admin";
+    joinedAt : Date;
+}
+
+export interface tTeamInvitationClass extends Document {
+    team : Types.ObjectId;
+    email : string;
+    invitedBy : Types.ObjectId;
+    token : string;
+    status : "pending" | "accepted" | "declined" | "expired";
+    expiresAt : Date;
 }

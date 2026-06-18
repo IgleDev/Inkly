@@ -13,6 +13,7 @@ import Perfil from "./pages/account/Perfil";
 import PerfilForm from "./pages/account/PerfilForm";
 import InfoAppLayout from "./layouts/InfoAppLayout";
 import Privacidad from "./pages/info/Privacidad";
+import TeamInvitationPage from "./pages/TeamInvitationPage";
 
 export default function Router() {
     return (
@@ -38,6 +39,7 @@ export default function Router() {
                 <Route element={<InfoAppLayout />}>
                     <Route path="/privacidad" element={<Privacidad />}></Route>
                 </Route>
+                <Route path="/team/team-invitation/:token" element={<TeamInvitationPage />} />
             </Routes>
         </BrowserRouter>
     )

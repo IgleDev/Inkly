@@ -99,7 +99,9 @@ export default function CreateBlogView() {
                         <div className="flex flex-col justify-start">
                             <TitleBlog />
                             <DescriptionBlog />
-                            <TeamBlog team={["Adrián Iglesias", "Anxo Rodriguez", "Claudia Casal"]} />
+                            {id !== null && (
+                                <TeamBlog team={data?.team ?? []} blogId={id} />
+                            )}
                             <TagBlog />
                             <div className="flex gap-4">
                                 <button onClick={() => handlePublish(true)} disabled={isPending} 

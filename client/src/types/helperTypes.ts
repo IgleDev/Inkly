@@ -46,3 +46,14 @@ export interface iBlogFormData {
     }[];
   };
 }
+
+export interface iInviteTeamParams {
+  email : string, 
+  blogId : string
+}
+
+export interface TeamMember {
+  _id: string;
+  name: string;
+  photoProfile?: string;
+}

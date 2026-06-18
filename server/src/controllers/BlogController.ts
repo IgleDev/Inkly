@@ -3,6 +3,8 @@ import Blog from '../models/Blog';
 import Post from '../models/Post';
 import type { Request, Response } from 'express'
 import User from '../models/User';
+import Team from '../models/Team';
+import TeamMembership from "../models/TeamMembership";
 
 export class BlogController {
     public static async createBlog(req : Request, res : Response) {
@@ -18,28 +20,43 @@ export class BlogController {
                 return res.status(401).json({ error : error.message });
             }
 
+            const team = new Team({
+                name: `${title}`,
+                owner: userId
+            });
+            
             const blog = new Blog({ 
                 title, 
                 description, 
                 tags,
                 owner : userId, 
                 published, 
-                reg 
+                reg,
+                team : team._id
             })
+            
+            team.blog = blog._id;
+            
+            await team.save({ session });
             await blog.save({ session });
-
+            
             const newPost = new Post({
                 blocks : post.blocks,
                 blog : blog._id,
                 author : userId
             })
-
+            
             await newPost.save({ session })
             await session.commitTransaction();
             res.json({blog : blog[0], post : newPost[0]});
         } catch (error) {
             await session.abortTransaction();
-            res.status(500).json({error : 'Error al crear el blog'});
+            console.error("ERROR REAL EN CREATE_BLOG:", error);
+
+            return res.status(500).json({ 
+                error: 'Error al crear el blog',
+                message: error.message // Te enviará el texto exacto del fallo al frontend
+            });
         } finally {
             session.endSession();
         }
@@ -80,6 +97,13 @@ export class BlogController {
                 return res.status(404).json({ error: 'No se encontró ningún blog asociado a ese ID' });
             }
 
+            const memberships = await TeamMembership.find({ team: blog.team }).populate('user', 'name photoProfile _id');
+            const team = memberships.map(m => ({
+                _id: (m.user as any)._id,
+                name: (m.user as any).name,
+                photoProfile: (m.user as any).photoProfile
+            }));
+
             const post = await Post.findOne({ blog: id }).populate('author', 'name');
             let isSaved = false;
             if(userId) {
@@ -89,6 +113,7 @@ export class BlogController {
             
             res.json({
                 blog,
+                team,
                 blocks: post?.blocks || [],
                 author: (post?.author as any)?.name || null,
                 isSaved

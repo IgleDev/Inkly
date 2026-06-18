@@ -12,7 +12,6 @@ router.get('/test', (req, res) => {
 });
 
 // * GET
-
 router.get('/user',
     authenticate,
     UserController.user
@@ -27,7 +26,6 @@ router.get('/user/:id',
 );
 
 // * POST
-
 router.post('/',
     body('name').isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),
     body('secondName').isString().withMessage('No puede ser un entero').notEmpty().withMessage('No puede estar vacio'),

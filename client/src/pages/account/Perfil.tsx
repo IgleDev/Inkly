@@ -25,7 +25,7 @@ export default function Perfil() {
   if (isLoading) return <p>Cargando...</p>;
 
   return (
-    <div>
+    <div className="my-5">
       <div className="w-full flex justify-end">
         <Link to={`/perfil-account/${user?._id}`}>
           <Cog6ToothIcon className="text-gray-500 w-10 h-10" />
@@ -41,16 +41,16 @@ export default function Perfil() {
         </h1>
       </div>
       <blockquote className="text-gray-500 mt-5 border-l-4 border-gray-300 pl-4 italic">{user?.description}</blockquote>
-      <div className="flex mt-5 justify-start w-full">
+      <div className="flex mt-5 justify-center w-full">
         {blogs?.length ? (
-          <div className="flex flex-row mt-5 flex-wrap">
+          <div className="flex justify-center flex-row mt-5 flex-wrap">
             <h2 className="w-full my-10 text-3xl font-bold text-[#C53F56]">
               Blogs Subidos
             </h2>
-          {blogs.map((blog, index) => (
-            <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} user={user} profileId={id}/>
-          ))}
-      </div>
+            {blogs.map((blog, index) => (
+              <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} user={user} profileId={id}/>
+            ))}
+          </div>
       ) : (
         <p>No hay blogs disponibles.</p>
       )}

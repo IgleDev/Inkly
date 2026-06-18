@@ -1,3 +1,4 @@
+import TeamBlog from "./TeamBlog";
 import { formatDate } from "@/helper";
 import { saveBlog } from "@/api/BlogAPI";
 import { useEffect, useState } from "react";
@@ -8,11 +9,12 @@ import { BookmarkIcon } from "@heroicons/react/24/outline";
 import { CalendarDateRangeIcon, ShareIcon, ClipboardDocumentCheckIcon, BookmarkSlashIcon } from "@heroicons/react/16/solid";
 
 interface iBlogInfoProps {
-    blog : iBlogRead['blog'];
-    isSaved: boolean;
+    blog : iBlogRead["blog"];
+    team : iBlogRead["team"];
+    isSaved : boolean;
 }
 
-export default function BlogInfo({ blog, isSaved } : iBlogInfoProps) {
+export default function BlogInfo({ blog, isSaved, team } : iBlogInfoProps) {
   const { id } = useParams();
     const [copied, setCopied] = useState(false);
     const [saved, setSaved] = useState(isSaved);
@@ -62,6 +64,7 @@ export default function BlogInfo({ blog, isSaved } : iBlogInfoProps) {
                     ))}
                 </div>
             </div>
+            <TeamBlog team={team} blogId={blog._id} />
             <p className="flex items-center text-sm font-semibold text-gray-400 mt-10">
                 <CalendarDateRangeIcon className="w-6 h-6 mr-2"/> Creado el {formatDate(blog?.createdAt)}
             </p>
