@@ -17,7 +17,7 @@ export default function BlogResumeCard({ blog, isOwner, user, profileId } : iBlo
   const location = window.location.pathname;
 
   return (
-    <div className="w-72">
+    <div className="w-72 mt-2">
       <div className="flex justify-between flex-col mx-2 border-[#C53F56] bg-orange-300/10 p-3 border-2 rounded-lg cursor-pointer">
         <Link to={`/blog/${blog._id}`} className="">
           <h2 className="text-2xl font-bold text-wrap">{blog.title}</h2>

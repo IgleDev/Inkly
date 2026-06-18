@@ -18,6 +18,7 @@ export default function AddModalTeamBlog({ blogId } : iAddModalTeamBlogProps) {
         mutationFn : inviteTeam,
         onError : (error) => console.log(error),
         onSuccess : (data) => {
+            setEmail("");
             setOpen(false);
             console.log(data);
         }

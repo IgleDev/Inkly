@@ -20,11 +20,11 @@ export default function TeamInvitationPage() {
 
             if (data) {
                 setStatus('success');
-                setMessage(data.message || '¡Unícheste ao equipo correctamente!');
+                setMessage(data.message || '¡Te uniste al equipo correctamente!');
                 setTimeout(() => navigate('/'), 3000);
             } else {
                 setStatus('error');
-                setMessage('A invitación caducou, xa foi usada ou o teu usuario non coincide.');
+                setMessage('La invitación caducó, ya fue usada o tu usuario no coincide.');
                 isProcessing.current = false; 
             }
         };
@@ -36,8 +36,8 @@ export default function TeamInvitationPage() {
         <div style={{ padding: '50px', textAlign: 'center', fontFamily: 'sans-serif' }}>
             <div style={{ maxWidth: '400px', margin: '0 auto', padding: '30px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                 {status === 'loading' && <h2>Procesando... ⏳</h2>}
-                {status === 'success' && <h2 style={{ color: '#28a745' }}>🎉 ¡Benvido/a ao equipo!</h2>}
-                {status === 'error' && <h2 style={{ color: '#dc3545' }}>❌ Erro na invitación</h2>}
+                {status === 'success' && <h2 style={{ color: '#28a745' }}>🎉 Bienvenido/a al equipo!</h2>}
+                {status === 'error' && <h2 style={{ color: '#dc3545' }}>❌ Error en la invitación</h2>}
                 <p style={{ marginTop: '10px', color: '#555' }}>{message}</p>
             </div>
         </div>

@@ -100,7 +100,7 @@ export default function CreateBlogView() {
                             <TitleBlog />
                             <DescriptionBlog />
                             {id !== null && (
-                                <TeamBlog team={[]} blogId={id} />
+                                <TeamBlog team={data?.team ?? []} blogId={id} />
                             )}
                             <TagBlog />
                             <div className="flex gap-4">
