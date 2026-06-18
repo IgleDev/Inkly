@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendInvitationEmail = async (email: string, teamName: string, token: string) => {
     try {
-        const url = `${`http://localhost:5173`}/users/team-invitation/${token}`;
+        const url = `${`http://localhost:5173`}/team/team-invitation/${token}`;
 
         const data = await resend.emails.send({
             from: "Blog App <onboarding@resend.dev>", // Cambia isto polo teu dominio cando esteas en produción (ex: no-reply@tudominio.com)

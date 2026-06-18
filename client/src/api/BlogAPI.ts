@@ -112,21 +112,3 @@ export async function saveBlog(blogId : string) {
         axiosError(error);
     }
 }
-
-export async function acceptTeamInvitation(token : string) {
-    try {
-        const url = `/users/invitation/${token}/accept`;
-        const { data } = await api.post(url, {}, {
-            headers : {
-                Authorization : `Bearer ${getToken()}`
-            }
-        });
-
-        if(!data) {
-            throw new Error('Non se puido aceptar a invitación');
-        }
-        return data;
-    } catch (error) {
-        axiosError(error);
-    }
-}

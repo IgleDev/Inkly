@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { acceptTeamInvitation } from '@/api/BlogAPI';
+import { acceptTeamInvitation } from '@/api/TeamAPI';
 
 export default function TeamInvitationPage() {
     const { token } = useParams();
