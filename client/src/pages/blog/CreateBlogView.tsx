@@ -87,15 +87,15 @@ export default function CreateBlogView() {
     }
 
     return (
-        <main>
+        <main className="px-4 sm:px-0">
             <CreateModalBlock />
-            <div className='max-w-5xl mx-auto pt-5'>
-                <h2 className='text-4xl font-bold text-left'>Crea tu <span className='text-[#1f387f]'>propio blog</span></h2>
-                <section className="grid grid-cols-12 mt-5 gap-10">
-                    <article className="col-span-9">
+            <div className='max-w-5xl mx-auto pt-3 sm:pt-5'>
+                <h2 className='text-2xl sm:text-4xl font-bold text-left'>Crea tu <span className='text-[#1f387f]'>propio blog</span></h2>
+                <section className="grid grid-cols-1 sm:grid-cols-12 mt-5 gap-6 sm:gap-10">
+                    <article className="sm:col-span-9">
                         <CreateBlogForm />
                     </article>
-                    <article className="col-span-3">
+                    <article className="sm:col-span-3">
                         <div className="flex flex-col justify-start">
                             <TitleBlog />
                             <DescriptionBlog />

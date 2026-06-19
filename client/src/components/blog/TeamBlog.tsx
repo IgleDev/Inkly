@@ -12,19 +12,19 @@ export default function TeamBlog({ team, blogId } : iTeamBlogsProps) {
     const showAddModal = location.pathname.includes('/new/edit-blog');
 
     return (
-        <div className="my-5">
-            <h3 className="text-2xl font-bold text-[#1f387f]">Equipo</h3>
+        <div className="my-5 w-full">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#1f387f]">Equipo</h3>
             <ul>
                 {team.length > 0 ? (
                     team.map(member => (
                         <li key={member._id}>
-                            <div className="flex items-center gap-2 my-2">
+                            <div className="flex items-center gap-2 my-2 break-all">
                                 {member.photoProfile !== undefined ? (
-                                    <img src={member.photoProfile} alt={member.name} className="w-5 h-5 rounded-full object-cover" />
+                                    <img src={member.photoProfile} alt={member.name} className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
                                 ) : (
-                                    <img src={"/fotoDefault.jpg"} alt={member.name} className="w-5 h-5 rounded-full object-cover"/>
+                                    <img src={"/fotoDefault.jpg"} alt={member.name} className="w-5 h-5 rounded-full object-cover flex-shrink-0"/>
                                 )}
-                                <a className="cursor-pointer" target="_blank" href={`/perfil/${member._id}`}>
+                                <a className="cursor-pointer break-all" target="_blank" href={`/perfil/${member._id}`}>
                                     {member.name}
                                 </a>
                             </div>

@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 
 export default function Privacidad() {
   return (
-    <article className="prose prose-gray max-w-none">
+    <article className="prose prose-gray max-w-none px-4 sm:px-0">
 
       <Link to="/auth/register" className="inline-flex items-center gap-2 text-sm text-[#C53F56] font-semibold mb-10 no-underline hover:underline">
         ← Volver
       </Link>
 
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-1">Política de Privacidad</h1>
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-1">Política de Privacidad</h1>
       <p className="text-sm text-gray-400 mb-10">Última actualización: junio de 2026</p>
 
       <Section title="1. Responsable del tratamiento">
@@ -103,8 +103,8 @@ export default function Privacidad() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mb-8">
-      <h2 className="text-lg font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">{title}</h2>
+    <section className="mb-6 sm:mb-8">
+      <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-3 pb-2 border-b border-gray-200">{title}</h2>
       <div className="text-gray-600 text-sm leading-relaxed space-y-2">{children}</div>
     </section>
   )
@@ -113,8 +113,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <tr className="border-b border-gray-100">
-      <td className="py-2 pr-4 font-semibold text-gray-700 w-32">{label}</td>
-      <td className="py-2 text-gray-600">{value}</td>
+      <td className="py-2 pr-4 font-semibold text-gray-700 w-24 sm:w-32">{label}</td>
+      <td className="py-2 text-gray-600 break-all sm:break-normal">{value}</td>
     </tr>
   )
 }
