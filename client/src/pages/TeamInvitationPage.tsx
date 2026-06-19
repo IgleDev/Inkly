@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { acceptTeamInvitation } from '@/api/TeamAPI';
-
 export default function TeamInvitationPage() {
     const { token } = useParams();
     const navigate = useNavigate();
@@ -15,9 +14,7 @@ export default function TeamInvitationPage() {
         
             if (isProcessing.current) return; 
             isProcessing.current = true; 
-
             const data = await acceptTeamInvitation(token);
-
             if (data) {
                 setStatus('success');
                 setMessage(data.message || '¡Te uniste al equipo correctamente!');
@@ -28,17 +25,15 @@ export default function TeamInvitationPage() {
                 isProcessing.current = false; 
             }
         };
-
         handleAccept();
     }, [token, navigate]);
-
     return (
-        <div style={{ padding: '50px', textAlign: 'center', fontFamily: 'sans-serif' }}>
-            <div style={{ maxWidth: '400px', margin: '0 auto', padding: '30px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-                {status === 'loading' && <h2>Procesando... ⏳</h2>}
-                {status === 'success' && <h2 style={{ color: '#28a745' }}>🎉 Bienvenido/a al equipo!</h2>}
-                {status === 'error' && <h2 style={{ color: '#dc3545' }}>❌ Error en la invitación</h2>}
-                <p style={{ marginTop: '10px', color: '#555' }}>{message}</p>
+        <div className="min-h-screen flex items-center justify-center px-4 py-12 font-sans">
+            <div className="w-full max-w-sm sm:max-w-md mx-auto p-6 sm:p-8 rounded-xl shadow-md">
+                {status === 'loading' && <h2 className="text-xl sm:text-2xl font-bold text-center">Procesando... ⏳</h2>}
+                {status === 'success' && <h2 className="text-xl sm:text-2xl font-bold text-center text-green-600">🎉 Bienvenido/a al equipo!</h2>}
+                {status === 'error' && <h2 className="text-xl sm:text-2xl font-bold text-center text-red-600">❌ Error en la invitación</h2>}
+                <p className="mt-3 text-sm sm:text-base text-center text-gray-500">{message}</p>
             </div>
         </div>
     );

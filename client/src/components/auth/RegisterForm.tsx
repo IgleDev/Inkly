@@ -9,71 +9,108 @@ import { useMutation } from "@tanstack/react-query";
 export default function RegisterForm() {
 
   const navigate = useNavigate();
-  const initialValues: iUserForm = { name: "", secondName: "", email: "", password: "", reg: "", privacidad : false };
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<iUserForm>({ defaultValues: initialValues });
+  const initialValues: iUserForm = {
+    name: "",
+    secondName: "",
+    email: "",
+    password: "",
+    reg: "",
+    privacidad: false
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<iUserForm>({
+    defaultValues: initialValues,
+  });
 
   const { mutate } = useMutation({
-    mutationFn : createAccount,
-    onError : (error) => (console.log(error), reset()),
-    onSuccess : () => { navigate('/auth/login');}
-  })
+    mutationFn: createAccount,
+    onError: (error) => (console.log(error), reset()),
+    onSuccess: () => {
+      navigate("/auth/login");
+    },
+  });
 
   const handleRegister = (formData: iUserForm) => {
     const { privacidad: _, ...rest } = formData;
     void _;
     mutate(rest);
-  }
+  };
 
   return (
     <>
       <form
         onSubmit={handleSubmit(handleRegister)}
-        className="space-y-8 p-10 rounded-2xl"
+        className="space-y-8 p-6 sm:p-10 rounded-2xl w-full"
         noValidate
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="name">Nombre</label>
+          <div className="flex flex-col gap-2 w-full">
+            <label
+              className="text-lg font-semibold text-[#C53F56]"
+              htmlFor="name"
+            >
+              Nombre
+            </label>
+
             <input
               id="name"
               type="text"
               placeholder="Juan Pérez"
-              className="duo-input"
+              className="duo-input w-full"
               {...register("name", {
                 required: "El Nombre es obligatorio",
               })}
             />
-            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+
+            {errors.name && (
+              <ErrorMessage>{errors.name.message}</ErrorMessage>
+            )}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="secondName">Apellido</label>
+          <div className="flex flex-col gap-2 w-full">
+            <label
+              className="text-lg font-semibold text-[#C53F56]"
+              htmlFor="secondName"
+            >
+              Apellido
+            </label>
+
             <input
               id="secondName"
               type="text"
               placeholder="Osorio Lago"
-              className="duo-input"
+              className="duo-input w-full"
               {...register("secondName", {
                 required: "El Apellido es obligatorio",
               })}
             />
+
             {errors.secondName && (
               <ErrorMessage>{errors.secondName.message}</ErrorMessage>
             )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="email">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-2 w-full">
+            <label
+              className="text-lg font-semibold text-[#C53F56]"
+              htmlFor="email"
+            >
               Email
             </label>
+
             <input
               id="email"
               type="email"
               placeholder="correo@correo.com"
-              className="duo-input"
+              className="duo-input w-full"
               {...register("email", {
                 required: "El Correo es obligatorio",
                 pattern: {
@@ -82,103 +119,141 @@ export default function RegisterForm() {
                 },
               })}
             />
-            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+
+            {errors.email && (
+              <ErrorMessage>{errors.email.message}</ErrorMessage>
+            )}
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-semibold text-[#C53F56]" htmlFor="password">Contraseña</label>
+          <div className="flex flex-col gap-2 w-full">
+            <label
+              className="text-lg font-semibold text-[#C53F56]"
+              htmlFor="password"
+            >
+              Contraseña
+            </label>
+
             <input
               id="password"
               type="password"
               placeholder="···············"
-              className="duo-input"
+              className="duo-input w-full"
               {...register("password", {
                 required: "La contraseña es obligatoria",
-                minLength : 8
+                minLength: 8,
               })}
             />
+
             {errors.password && (
               <ErrorMessage>{errors.password.message}</ErrorMessage>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 w-full">
           <label className="text-lg font-semibold text-[#C53F56]">
             Región
           </label>
 
-          <select className="duo-select"
+          <select
+            className="duo-select w-full"
             {...register("reg", {
               required: "Selecciona una región",
             })}
           >
             <option value="">Selecciona tu región</option>
+
             {countries.map((country) => (
-              <option key={country.value} value={country.value}>{country.name}</option>
+              <option
+                key={country.value}
+                value={country.value}
+              >
+                {country.name}
+              </option>
             ))}
           </select>
-          
+
           {errors.reg && (
             <ErrorMessage>{errors.reg.message}</ErrorMessage>
           )}
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800 leading-relaxed">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800 leading-relaxed break-words">
           <p>
-            Tus datos (nombre, apellidos, email, foto, biografía, contraseña y región) serán tratados por{" "}
-            <strong>Inkly</strong> para gestionar tu acceso a la plataforma.
-            Base jurídica: ejecución de un contrato (Art. 6.1.b RGPD). No cedemos datos
-            a terceros salvo obligación legal. Puedes ejercer tus derechos escribiendo a{" "}
-            <a href="mailto: adriiglesias2016@gmail.com" className="underline font-semibold">
+            Tus datos (nombre, apellidos, email, foto, biografía, contraseña y
+            región) serán tratados por <strong>Inkly</strong> para gestionar tu
+            acceso a la plataforma. Base jurídica: ejecución de un contrato
+            (Art. 6.1.b RGPD). No cedemos datos a terceros salvo obligación
+            legal. Puedes ejercer tus derechos escribiendo a{" "}
+            <a
+              href="mailto: adriiglesias2016@gmail.com"
+              className="underline font-semibold"
+            >
               adriiglesias2016@gmail.com
             </a>
             . Más info en nuestra{" "}
-            <Link to="/privacidad" className="underline font-semibold">
+            <Link
+              to="/privacidad"
+              className="underline font-semibold"
+            >
               Política de Privacidad
             </Link>
             .
           </p>
         </div>
 
-        <div className="flex items-start gap-3">
+        <div className="flex items-start gap-3 flex-wrap sm:flex-nowrap">
           <input
             id="privacidad"
             type="checkbox"
             className="mt-1 w-4 h-4 accent-[#C53F56] cursor-pointer flex-shrink-0"
             {...register("privacidad", {
-              required: "Debes aceptar la política de privacidad para continuar",
+              required:
+                "Debes aceptar la política de privacidad para continuar",
             })}
           />
-          <label htmlFor="privacidad" className="text-sm text-gray-600 cursor-pointer">
+
+          <label
+            htmlFor="privacidad"
+            className="text-sm text-gray-600 cursor-pointer"
+          >
             He leído y acepto la{" "}
-            <Link to="/privacidad" className="text-[#C53F56] font-semibold underline">
+            <Link
+              to="/privacidad"
+              className="text-[#C53F56] font-semibold underline"
+            >
               Política de Privacidad
             </Link>{" "}
             y los{" "}
-            <Link to="/terminos" className="text-[#C53F56] font-semibold underline">
+            <Link
+              to="/terminos"
+              className="text-[#C53F56] font-semibold underline"
+            >
               Términos y Condiciones
             </Link>
-            .{" "}
-            <span className="text-red-500">*</span>
+            . <span className="text-red-500">*</span>
           </label>
         </div>
-        {errors.privacidad && <ErrorMessage>{errors.privacidad.message}</ErrorMessage>}
+
+        {errors.privacidad && (
+          <ErrorMessage>{errors.privacidad.message}</ErrorMessage>
+        )}
 
         <input
           type="submit"
           value="CREAR CUENTA"
-          className="w-full mt-6 bg-[#C53F56] hover:bg-[#d8455e] text-white text-xl font-extrabold py-4 rounded-xl 
-            shadow-lg active:scale-95 transition cursor-pointer"
+          className="w-full mt-6 bg-[#C53F56] hover:bg-[#d8455e] text-white text-xl font-extrabold py-4 rounded-xl shadow-lg active:scale-95 transition cursor-pointer"
         />
       </form>
-      <nav className="mt-10 flex flex-col space-y-4">
+
+      <nav className="mt-10 flex flex-col space-y-4 px-4 sm:px-0">
         <Link
           to={"/auth/login"}
           className="text-center text-[#C53F56] font-bold"
         >
           Ya tienes cuenta? Inicia Sesión!
         </Link>
+
         <Link
           to={"/auth/forgot-password"}
           className="text-center text-[#C53F56] font-bold"

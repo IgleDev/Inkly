@@ -2,8 +2,6 @@ import { getBlogById } from "@/api/BlogAPI"
 import BlogContent from "@/components/blog/BlogContent";
 import { useQuery } from "@tanstack/react-query"
 import { Navigate, useParams } from "react-router-dom";
-
-
 export default function BlogView() {
     const { id } = useParams();
     
@@ -21,7 +19,7 @@ export default function BlogView() {
     if (!data) return null;
     
     return (
-      <div>
+      <div className="px-4 sm:px-0">
         <BlogContent data={data} />
       </div>
     )

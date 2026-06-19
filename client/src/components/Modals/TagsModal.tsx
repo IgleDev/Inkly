@@ -38,29 +38,29 @@ export default function TagsModal() {
                     className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
                 />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <div className="flex min-h-full items-end justify-center p-2 sm:p-4 text-center sm:items-center sm:p-0">
                         <DialogPanel transition
-                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in w-full sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
-                            <div className="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="bg-gray-800 px-3 pt-4 pb-3 sm:p-6 sm:pb-4">
                                 <div className="sm:flex sm:items-start">
-                                    <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-500/10 sm:mx-0 sm:size-10">
-                                        <InformationCircleIcon aria-hidden="true" className="size-6 text-blue-400" />
+                                    <div className="mx-auto flex size-10 sm:size-12 shrink-0 items-center justify-center rounded-full bg-red-500/10 sm:mx-0 sm:size-10">
+                                        <InformationCircleIcon aria-hidden="true" className="size-5 sm:size-6 text-blue-400" />
                                     </div>
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                        <DialogTitle as="h3" className="text-base font-semibold text-white">
+                                        <DialogTitle as="h3" className="text-sm sm:text-base font-semibold text-white">
                                             Estás apuno de añadir un <i className="text-gray-400">Tag</i>!
                                         </DialogTitle>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-400">
+                                            <p className="text-xs sm:text-sm text-gray-400">
                                                 Esto herramiento sirve para poder filtrar por temas de interes y hacer que nuestros lectores
                                                 vayan directos al grano. Puedes añadir hasta un máximo de 3 <i className="font-bold">TAGS</i> por blog.
                                             </p>
                                         </div>
                                         <div className="flex flex-col w-full mt-5">
-                                            <label htmlFor="tag" className="text-gray-400 text-sm text-right">{tag.length}/{maxLengths.BLOCK_TAG}</label>
+                                            <label htmlFor="tag" className="text-gray-400 text-xs sm:text-sm text-right">{tag.length}/{maxLengths.BLOCK_TAG}</label>
                                             <input value={tag} placeholder="Añadir tags" onChange={(e) => setTag(e.target.value)} maxLength={maxLengths.BLOCK_TAG}
-                                                className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2" />
+                                                className="mt-2 bg-gray-700 text-white placeholder:text-gray-500 border border-gray-600 focus:ring-blue-500 focus:outline-none rounded-xl p-2 text-sm sm:text-base" />
                                             <button type="button" className="mt-2 w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:w-auto transition-colors"
                                                 onClick={handleAddTag}>
                                                 Añadir
@@ -69,9 +69,9 @@ export default function TagsModal() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row justify-end sm:px-6">
+                            <div className="bg-gray-700/25 px-3 py-3 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:px-6">
                                 <button type="button" data-autofocus onClick={handleClose}
-                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
+                                    className="mt-0 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
                                 >
                                     Cancelar
                                 </button>

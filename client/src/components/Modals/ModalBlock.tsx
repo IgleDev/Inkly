@@ -44,8 +44,8 @@ export default function ModalBlock() {
     return (
         <div>
             <button onClick={handleOpen}
-                className="flex items-center rounded-md bg-white/10 px-2.5 py-1.5 text-2xl font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">
-                <PlusCircleIcon className="w-10 h-10 mr-2" /> Agregar Bloque
+                className="flex items-center justify-center w-full sm:w-auto rounded-md bg-white/10 px-2.5 py-1.5 text-lg sm:text-2xl font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20">
+                <PlusCircleIcon className="w-8 h-8 sm:w-10 sm:h-10 mr-2" /> Agregar Bloque
             </button>
             <Dialog open={showModal} onClose={handleClose} className="relative z-10">
                 <DialogBackdrop transition
@@ -54,31 +54,31 @@ export default function ModalBlock() {
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                         <DialogPanel transition
-                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
+                            className="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in w-full max-w-md sm:my-8 sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
                         >
                             <div className="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div className="sm:flex sm:items-start">
+                                <div className="flex flex-col sm:flex-row sm:items-start">
                                     <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-500/10 sm:mx-0 sm:size-10">
                                         <InformationCircleIcon aria-hidden="true" className="size-6 text-blue-400" />
                                     </div>
-                                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                         <DialogTitle as="h3" className="text-base font-semibold text-white">
                                             Agrega un bloque a tu blog!
                                         </DialogTitle>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-400">
+                                            <p className="text-sm text-gray-400 break-words">
                                                 Aquí podrás escoger entre diferentes tipos de bloques para agregar tu blog.
                                                 Podrás elegir entre títulos, párrafos, imágenes, videos, listas y más.
                                                 Y en tan solo un click ¡Así de fácil!
                                             </p>
                                         </div>
-                                        <div className="w-96 mt-5">
+                                        <div className="w-full mt-5">
                                             <div className="flex flex-col gap-2">
                                                 {Object.entries(BlockSelection).map(([key, label]) => (
                                                     <div key={key} className="w-full bg-[#1f387F] text-white px-4 py-2 rounded-full">
-                                                        <div className="flex justify-between gap-2">
+                                                        <div className="flex justify-between items-center gap-2">
                                                             <input type="radio" id={key} name="block" value={key} className={key} onChange={() => selectRadioBlock(key as tBlockType)} />
-                                                            <label htmlFor={key} className="text-xl font-bold">{label}</label>
+                                                            <label htmlFor={key} className="text-base sm:text-xl font-bold break-words">{label}</label>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -87,14 +87,14 @@ export default function ModalBlock() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row justify-end sm:px-6">
+                            <div className="bg-gray-700/25 px-4 py-3 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:px-6">
                                 <button type="button" data-autofocus onClick={handleClose}
-                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
+                                    className="inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:w-auto"
                                 >
                                     Cancelar
                                 </button>
                                 <button type="button" onClick={handleAddBlock} disabled={!selectedBlock}
-                                    className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:ml-3 sm:w-auto transition-colors"
+                                    className="inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:w-auto transition-colors"
                                 >
                                     Añadir
                                 </button>
