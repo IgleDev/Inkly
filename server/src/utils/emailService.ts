@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendInvitationEmail = async (email: string, teamName: string, token: string) => {
     try {
-        const url = `${`http://localhost:5173`}/team/team-invitation/${token}`;
+        const url = `${`${process.env.FRONTEND_URL}`}/team/team-invitation/${token}`;
 
         const data = await resend.emails.send({
             from: "Blog App <infoinkly@gmail.com>", // Cambia isto polo teu dominio cando esteas en produción (ex: no-reply@tudominio.com)
