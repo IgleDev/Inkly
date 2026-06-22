@@ -119,3 +119,20 @@ export const userFormSchema = userSchema.pick({
     message: "Debes aceptar la política de privacidad"
   })
 });
+
+export const TeamBlogSchema = z.object({
+  _id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  tags: z.array(z.string()),
+  owner: z.string(),
+  published: z.boolean(),
+  reg: z.string(),
+  team: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const TeamBlogsResponseSchema = z.object({
+  blogs: z.array(TeamBlogSchema),
+});

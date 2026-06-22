@@ -2,7 +2,7 @@ import api from "@/lib";
 import type { iBlogRead } from "@/types/types";
 import { axiosError, getToken } from "@/helper";
 import type { iBlogFormData } from "@/types/helperTypes";
-import { blogReadSchema, blogsResponseSchema } from "@/schema/schemas";
+import { blogReadSchema, blogsResponseSchema, TeamBlogsResponseSchema } from "@/schema/schemas";
 
 export async function createBlog(formData : iBlogFormData) {
     try {
@@ -61,7 +61,6 @@ export async function getBlogById(id : string) {
     try {
         const url = `/blog/${id}`;
         const { data } = await api.get<iBlogRead>(url);
-            console.log("DATA:", data);
         const response = blogReadSchema.safeParse(data);
         if (!response.success) {
             console.error(response.error.format()); // verás exactamente qué campo falla
@@ -112,5 +111,22 @@ export async function saveBlog(blogId : string) {
         return data;
     } catch (error) {
         axiosError(error);
+    }
+}
+
+export async function getBlogsTeam() {
+    try {
+        const token = getToken();
+        const url = '/blog/get-team-blogs';
+        const { data } = await api.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const response = TeamBlogsResponseSchema.parse(data);
+        return response.blogs;
+    } catch (error) {
+        axiosError(error);
+        return [];
     }
 }

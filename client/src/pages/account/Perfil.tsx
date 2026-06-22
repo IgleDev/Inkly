@@ -1,23 +1,34 @@
 import { useReg } from "@/hooks/useReg";
 import { useAuth } from "@/hooks/useAuth";
+import { getBlogsTeam } from "@/api/BlogAPI";
 import { getUserById } from "@/api/AccountAPI";
 import { useQuery } from "@tanstack/react-query";
-import type { iBlogAccount } from "@/types/types";
 import { Link, useParams } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import type { iBlogAccount, ITeamBlog } from "@/types/types";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
+
 export default function Perfil() {
   const { data: sessionUser } = useAuth();
   const { id } = useParams<{ id: string }>();
+
   const { data: profileUser, isLoading } = useQuery({
     queryKey: ['user', 'blogs', id],
     queryFn: () => getUserById(id!),
     enabled: !!id
   });
+
+
+  const { data: teamBlogs } = useQuery<ITeamBlog[]>({
+    queryKey: ['user', 'blogs', 'team', id],
+    queryFn: () => getBlogsTeam(),
+  });
+
   const { user, blogs } = profileUser || {};
   const reg = useReg(user?.reg);
   const isOwner = sessionUser?.name === user?.name;
   if (isLoading) return <p>Cargando...</p>;
+
   return (
     <div className="my-5 px-4 sm:px-0">
       <div className="w-full flex justify-end">
@@ -48,6 +59,20 @@ export default function Perfil() {
       ) : (
         <p>No hay blogs disponibles.</p>
       )}
+      </div>
+      <div className="flex mt-5 justify-center w-full">
+        {teamBlogs?.length ? (
+          <div className="flex justify-center flex-row mt-5 flex-wrap">
+            <h2 className="w-full my-6 sm:my-10 text-2xl sm:text-3xl font-bold text-[#C53F56]">
+              Blogs de Equipo
+            </h2>
+            {teamBlogs.map((blog, index) => (
+              <BlogResumeCard key={index} blog={blog as iBlogAccount} isOwner={isOwner} user={user} profileId={id}/>
+            ))}
+          </div>
+        ) : (
+          <p>No perteneces a ningún equipo.</p>
+        )}
       </div>
     </div>
   )

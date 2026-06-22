@@ -123,7 +123,7 @@ export class BlogController {
         }
     }
 
-    public static async updateBlogPublished(req : Request, res : Response) {
+    public static async updateBlogPublished(req: Request, res: Response) {
         const session = await mongoose.startSession();
         session.startTransaction();
 
@@ -132,27 +132,45 @@ export class BlogController {
             const { title, description, tags, published, reg, post } = req.body;
             const userId = req.user?._id;
 
-            if(!userId) {
-                const error = new Error('No se ha podido identificar el usuario');
-                return res.status(401).json({ error : error.message });
+            if (!userId) {
+                return res.status(401).json({ error: "No se ha podido identificar el usuario" });
             }
 
-            if(!id) {
-                const error = new Error('No se pudo identificar el blog');
-                return res.status(404).json({ error : error.message });
+            const blog = await Blog.findById(id).session(session);
+
+            if (!blog) {
+                return res.status(404).json({ error: "No se pudo identificar el blog" });
             }
 
-            const blog = await Blog.findByIdAndUpdate(id, { title, description, tags, published, reg, }, { session, new: true });
-            if (blog.owner.toString() !== userId.toString()) {
-                const error = new Error('No tienes permisos para editar este blog');
-                return res.status(403).json({ error: error.message });
+            if (blog.team) {
+                const membership = await TeamMembership.findOne({ user: userId, team: blog.team }).session(session);
+                if (!membership) {
+                    return res.status(403).json({ error: "No perteneces al equipo de este blog" });
+                }
+            } else {
+                if (blog.owner.toString() !== userId.toString()) {
+                    return res.status(403).json({
+                        error: "No tienes permisos para editar este blog"
+                    });
+                }
             }
+
+            blog.title = title;
+            blog.description = description;
+            blog.tags = tags;
+            blog.published = published;
+            blog.reg = reg;
+
+            await blog.save({ session });
+
             await Post.findOneAndUpdate({ blog: id }, { blocks: post.blocks }, { session });
+
             await session.commitTransaction();
-            res.json({ message: 'Blog actualizado correctamente' });
+
+            res.json({ message: "Blog actualizado correctamente" });
         } catch (error) {
             await session.abortTransaction();
-            res.status(500).json({ error : 'Error al editar el blog'});
+            res.status(500).json({ error: "Error al editar el blog" });
         } finally {
             session.endSession();
         }
@@ -210,4 +228,22 @@ export class BlogController {
             res.status(500).json({ error: 'Error al guardar el blog' });
         }
     }
+
+    public static async getBlogsTeam(req: Request, res: Response) {
+        const userId = req.user?._id;
+        try {
+            if (!userId) {
+                return res.status(401).json({ error: 'No se encontró al usuario' });
+            }
+
+            const memberships = await TeamMembership.find({ user: userId }).select('team');
+            const teamIds = memberships.map(m => m.team);
+            const blogs = await Blog.find({ team: { $in: teamIds } }); 
+
+            res.json({ blogs });
+        } catch (error) { 
+            res.status(500).json({ error: 'Error al obtener los blogs del equipo' });
+        }
+    }
+
 }

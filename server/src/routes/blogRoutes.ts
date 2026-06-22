@@ -26,6 +26,12 @@ router.get('/filter-by-tags',
     BlogController.getBlogByTags
 );
 
+router.get('/get-team-blogs',
+    authenticate,
+    handleInputErrors,
+    BlogController.getBlogsTeam
+)
+
 router.get('/:id',
     optionalAuthenticate,
     param('id').isMongoId().withMessage('ID de blog no válido').notEmpty().withMessage('ID de blog es obligatorio'),
