@@ -32,7 +32,7 @@ export default function LoginForm() {
   return (
     <>
       <form onSubmit={handleSubmit(handleRegister)} className="space-y-8 p-6 sm:p-10 rounded-2xl w-full" noValidate>
-        <div className="flex flex-col gap-2 w-full max-w-96">
+        <div className="flex flex-col gap-2 w-full">
           <label className="text-lg font-semibold text-[#C53F56]" htmlFor="email">
             Email
           </label>
@@ -49,7 +49,7 @@ export default function LoginForm() {
           {errors.email && (<ErrorMessage>{errors.email.message}</ErrorMessage>)}
         </div>
 
-        <div className="flex flex-col gap-2 w-full max-w-96">
+        <div className="flex flex-col gap-2 w-full">
           <label className="text-lg font-semibold text-[#C53F56]" htmlFor="password">
             Contraseña
           </label>
