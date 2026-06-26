@@ -19,7 +19,7 @@ export async function createBlog(formData : iBlogFormData) {
         }
         return data;
     } catch (error) {
-       axiosError(error);
+       throw axiosError(error);
     }
 }
 
@@ -53,7 +53,7 @@ export async function getBlogsByTags(reg : string, tag : string) {
             return response.data;
         }
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 
@@ -68,7 +68,7 @@ export async function getBlogById(id : string) {
         }
 return response.data;
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 
@@ -82,7 +82,7 @@ export async function updateBlog(id : string, formData : iBlogFormData) {
         })
         return data;
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 
@@ -96,7 +96,7 @@ export async function deleteBlog(id : string) {
         });
         return data;
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 
@@ -110,7 +110,7 @@ export async function saveBlog(blogId : string) {
         });
         return data;
     } catch (error) {
-        axiosError(error);
+        throw axiosError(error);
     }
 }
 

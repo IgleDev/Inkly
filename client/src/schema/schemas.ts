@@ -93,7 +93,7 @@ export const blogReadSchema = z.object({
         owner: z.object({
             _id : z.string(),
             name: z.string(),
-            photoProfile: z.string()
+            photoProfile: z.string().optional(),
         })
     }),
     team: z.array(
