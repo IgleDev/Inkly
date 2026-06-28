@@ -27,12 +27,12 @@ export default function LinkViewProfile({ user } : iLinkViewProfileModal ) {
         <div className="w-full sm:w-auto">
             {
                 user ? (
-                    <Button url={`/perfil/${user._id}`} icon={<UserIcon className="w-5 h-5 inline mr-2"/>}>
+                    <Button url={`/perfil/${user._id}`} replace={false} icon={<UserIcon className="w-5 h-5 inline mr-2"/>}>
                         Ver Perfil 
                     </Button>
                 ) : (
                     <button onClick={handleOpen} className="w-full sm:w-auto">
-                        <Button url={'#'} icon={<UserIcon className="w-5 h-5 inline mr-2"/>}>
+                        <Button url={'#'} replace={false} icon={<UserIcon className="w-5 h-5 inline mr-2"/>}>
                             Ver Perfil 
                         </Button>
                     </button>

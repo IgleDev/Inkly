@@ -2,13 +2,15 @@ import { useReg } from "@/hooks/useReg";
 import { useAuth } from "@/hooks/useAuth";
 import { getBlogsTeam } from "@/api/BlogAPI";
 import { getUserById } from "@/api/AccountAPI";
-import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import type { iBlogAccount, ITeamBlog } from "@/types/types";
 import BlogResumeCard from "@/components/blog/BlogResumeCard";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Perfil() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: sessionUser } = useAuth();
   const { id } = useParams<{ id: string }>();
 
@@ -18,11 +20,16 @@ export default function Perfil() {
     enabled: !!id
   });
 
-
   const { data: teamBlogs } = useQuery<ITeamBlog[]>({
     queryKey: ['user', 'blogs', 'team', id],
     queryFn: () => getBlogsTeam(),
   });
+
+  const logout = () => {
+    localStorage.clear();
+    queryClient.clear();
+    navigate("/auth/login", { replace: true });
+  };
 
   const { user, blogs } = profileUser || {};
   const reg = useReg(user?.reg);
@@ -31,10 +38,15 @@ export default function Perfil() {
 
   return (
     <div className="my-5 px-4 sm:px-0">
-      <div className="w-full flex justify-end">
+      <div className="w-full flex items-center justify-end">
         <Link to={`/perfil-account/${user?._id}`}>
           <Cog6ToothIcon className="text-gray-500 w-7 h-7 sm:w-10 sm:h-10" />
         </Link>
+        <button onClick={logout}
+          className="mt-2 px-3 py-3 sm:px-6 sm:py-5 mx-2 rounded-full font-extrabold uppercase tracking-wide transition-all duration-150 bg-[#C53F56] text-white shadow-[0_6px_0_0_#8B1A2B]
+          hover:translate-y-0.5 hover:shadow-[0_4px_0_0_#8B1A2B] active:translate-y-1 active:shadow-[0_2px_0_0_#8B1A2B]">
+            Cerrar sesión
+        </button>
       </div>
       <div className="flex items-center mb-6 sm:mb-10">
         <img src={user?.photoProfile} alt={`Photo of ${user?.name}`} className="w-12 h-12 sm:w-16 sm:h-16 mr-3 sm:mr-5 rounded-full"/> 
