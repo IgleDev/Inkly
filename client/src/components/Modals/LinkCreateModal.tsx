@@ -27,12 +27,12 @@ export default function LinkCreateModal({ user } : iLinkCreateModal) {
         <div className="w-full sm:w-auto">
             {
                 user ? (
-                    <Button url={'/new/create-blog'} icon={<FolderPlusIcon className="w-5 h-5 inline mr-2"/> }>
+                    <Button url={'/new/create-blog'} replace={false} icon={<FolderPlusIcon className="w-5 h-5 inline mr-2"/> }>
                         Crear Blog
                     </Button>
                 ) : (
                     <button onClick={handleOpen} className="w-full sm:w-auto">
-                        <Button url={'#'} icon={<FolderPlusIcon className="w-5 h-5 inline mr-2"/> }>
+                        <Button url={'#'} replace={false} icon={<FolderPlusIcon className="w-5 h-5 inline mr-2"/> }>
                             Crear Blog
                         </Button>
                     </button>
