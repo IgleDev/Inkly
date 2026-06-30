@@ -22,6 +22,7 @@ export interface iBlogState {
     setTags : (tags : string[]) => void,
     clearFunction : () => void,
     setBlocks: (blocks: iBlockSelect[]) => void;
+    nextOrder: number,
 }
 
 export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
@@ -52,12 +53,13 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
                 value: inputValue,
                 description : description || '',
                 file: file,
-                order: state.blocks.length
+                order: state.nextOrder
             };
 
             return {
                 blocks: [...state.blocks, newBlock],
-                selectedBlock : null
+                selectedBlock : null,
+                nextOrder : state.nextOrder + 1
             };
         });
     },
@@ -83,7 +85,9 @@ export const createBlogSlice : StateCreator<iBlogState> = (set, get) => ({
         blocks : [], 
         blogDraft : { _id : '', title : '', description : '', tags : []},
         tags : [],
-        selectedBlock : null
+        selectedBlock : null,
+        nextOrder : 0,
     }),
     setBlocks: (blocks: iBlockSelect[]) => set({ blocks }),
+    nextOrder: 0,
 });
