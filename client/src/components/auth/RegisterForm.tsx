@@ -253,13 +253,6 @@ export default function RegisterForm() {
         >
           Ya tienes cuenta? Inicia Sesión!
         </Link>
-
-        <Link
-          to={"/auth/forgot-password"}
-          className="text-center text-[#C53F56] font-bold"
-        >
-          ¿Olvidaste tu contraseña? Reestablecer
-        </Link>
       </nav>
     </>
   );
