@@ -1,12 +1,12 @@
 "use client";
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAppStore } from "@/stores/useAppStore";
-import { useState } from "react";
-import { BLOCK_TYPES } from "@/types/helperTypes";
 import { maxLengths } from "@/helper";
+import { BLOCK_TYPES } from "@/types/helperTypes";
+import { useAppStore } from "@/stores/useAppStore";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 
 export default function OptionsModalBlock() {
     const [inputValue, setInputValue] = useState('');
@@ -15,12 +15,27 @@ export default function OptionsModalBlock() {
 
     const navigate = useNavigate();
     const location = useLocation();
-
+    
     const modalUpload = useAppStore(state => state.modalUpload);
     const selectedBlock = useAppStore(state => state.selectedBlock);
     const addRadioBlock = useAppStore(state => state.addRadioBlock);
     const closeModalUpload = useAppStore(state => state.closeModalUpload);
 
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    
+    useEffect(() => {
+        if (!modalUpload) return;
+        const timer = setTimeout(() => {
+            if (selectedBlock === BLOCK_TYPES.QUOTE) {
+                textareaRef.current?.focus();
+            } else if (selectedBlock === BLOCK_TYPES.IMAGE || selectedBlock === BLOCK_TYPES.VIDEO) {
+                fileInputRef.current?.focus();
+            }
+        }, 50);
+        return () => clearTimeout(timer);
+    }, [modalUpload, selectedBlock]);
+    
     const handleConfirm = () => {
         if (!selectedBlock || !inputValue) return;
         addRadioBlock(selectedBlock, inputValue, descriptionValue, fileValue ?? undefined);
@@ -42,7 +57,7 @@ export default function OptionsModalBlock() {
         if (selectedBlock === BLOCK_TYPES.QUOTE) {
             return (
                 <>
-                    <textarea value={inputValue} onChange={e => setInputValue(e.target.value)} maxLength={maxLengths.BLOCK_QUOTE}
+                    <textarea ref={textareaRef} value={inputValue} onChange={e => setInputValue(e.target.value)} maxLength={maxLengths.BLOCK_QUOTE}
                         placeholder="Escribe tu cita..." className="w-full bg-gray-700 text-white rounded-lg p-3 outline-none resize-none"
                     />
                     <label className="text-gray-400 text-sm">{inputValue.length}/{maxLengths.BLOCK_QUOTE}</label>
@@ -53,7 +68,7 @@ export default function OptionsModalBlock() {
         if (selectedBlock === BLOCK_TYPES.IMAGE || selectedBlock === BLOCK_TYPES.VIDEO) {
             return (
                 <div className="flex flex-col">
-                    <input type="file" accept={selectedBlock === BLOCK_TYPES.IMAGE ? `${BLOCK_TYPES.IMAGE}/*` : `${BLOCK_TYPES.VIDEO}/*`}
+                    <input ref={fileInputRef} type="file" accept={selectedBlock === BLOCK_TYPES.IMAGE ? `${BLOCK_TYPES.IMAGE}/*` : `${BLOCK_TYPES.VIDEO}/*`}
                         onChange={e => {
                             const file = e.target.files?.[0];
                             if (file) { setInputValue(URL.createObjectURL(file)); setFileValue(file); }

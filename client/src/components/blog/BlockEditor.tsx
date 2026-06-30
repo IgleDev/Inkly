@@ -2,19 +2,36 @@ import { maxLengths } from "@/helper";
 import { useAppStore } from "@/stores/useAppStore";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes";
+import { useRef, useEffect } from "react";
 
 interface iBlockEditorProps {
     block: iBlockSelect;
 }
 
 export default function BlockEditor({ block }: iBlockEditorProps) {
+
+    const headingRef = useRef<HTMLInputElement>(null);
+    const paragraphRef = useRef<HTMLTextAreaElement>(null);
+
     const updateBlock = useAppStore((state) => state.updateBlock);
     const deleteBlock = useAppStore((state) => state.deleteBlock);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (block.type === BLOCK_TYPES.HEADING) {
+                headingRef.current?.focus();
+            } else if (block.type === BLOCK_TYPES.PARAGRAPH) {
+                paragraphRef.current?.focus();
+            }
+        }, 100);
+        return () => clearTimeout(timer);
+    }, []);
 
     if (block.type === BLOCK_TYPES.HEADING) {
         return (
             <div className="flex flex-col group/title w-full">
                 <input
+                    ref={headingRef}
                     className="w-full resize-none bg-transparent outline-none text-2xl sm:text-3xl lg:text-4xl"
                     placeholder="Titulo..."
                     type="text"
@@ -43,6 +60,7 @@ export default function BlockEditor({ block }: iBlockEditorProps) {
         return (
             <div className="flex flex-col group/paragraph w-full">
                 <textarea
+                    ref={paragraphRef}
                     className="w-full resize-none bg-transparent outline-none text-lg sm:text-xl"
                     rows={3}
                     maxLength={maxLengths.BLOCK_PARAGRAPH}

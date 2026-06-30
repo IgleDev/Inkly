@@ -75,12 +75,12 @@ export default function ModalBlock() {
                                         <div className="w-full mt-5">
                                             <div className="flex flex-col gap-2">
                                                 {Object.entries(BlockSelection).map(([key, label]) => (
-                                                    <div key={key} className="w-full bg-[#1f387F] text-white px-4 py-2 rounded-full">
+                                                    <label htmlFor={key} key={key} className="w-full bg-[#1f387F] text-white px-4 py-2 rounded-full cursor-pointer block">
                                                         <div className="flex justify-between items-center gap-2">
-                                                            <input type="radio" id={key} name="block" value={key} className={key} onChange={() => selectRadioBlock(key as tBlockType)} />
-                                                            <label htmlFor={key} className="text-base sm:text-xl font-bold break-words">{label}</label>
+                                                            <input type="radio" id={key} name="block" value={key} className={key} checked={selectedBlock === key} onChange={() => selectRadioBlock(key as tBlockType)} />
+                                                            <span className="text-base sm:text-xl font-bold break-words">{label}</span>
                                                         </div>
-                                                    </div>
+                                                    </label>
                                                 ))}
                                             </div>
                                         </div>

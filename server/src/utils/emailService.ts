@@ -8,7 +8,7 @@ export const sendInvitationEmail = async (email: string, teamName: string, token
         const url = `${`${process.env.FRONTEND_URL}`}/team/team-invitation/${token}`;
 
         const data = await resend.emails.send({
-            from: "Blog App <infoinkly@gmail.com>", // Cambia isto polo teu dominio cando esteas en produción (ex: no-reply@tudominio.com)
+            from: "Blog App <infoinkly@gmail.com>",
             to: email,
             subject: `Invitación para unirte ao equipo: ${teamName}`,
             html: `
