@@ -10,7 +10,7 @@ import { ArrowUpTrayIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { createBlog, getBlogById, updateBlog } from "@/api/BlogAPI";
 import CreateModalBlock from "@/components/Modals/CreateModalBlock";
-import { BLOCK_TYPES, type iBlockSelect } from "@/types/helperTypes";
+import { BLOCK_TYPES, type iBlockSelect, type iBlogFormData } from "@/types/helperTypes";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export default function CreateBlogView() {
@@ -46,7 +46,7 @@ export default function CreateBlogView() {
         }
     }, [data]);
 
-    const { mutate, isPending } = useMutation({
+    const { mutate, isPending } = useMutation<any, Error, iBlogFormData>({
         mutationFn : isEdit ? (formData) => updateBlog(id!, formData) : createBlog,
         onSuccess : () => { 
             queryClient.invalidateQueries({ queryKey : ['blogs']});
