@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { uploadImage } from "@/api/UploadAPI";
 import CreateBlogForm from "./CreateBlogForm";
 import TagBlog from "@/components/blog/TagBlog";
@@ -6,17 +6,20 @@ import TeamBlog from "@/components/blog/TeamBlog";
 import { useAppStore } from "@/stores/useAppStore";
 import TitleBlog from "@/components/blog/TitleBlog";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowUpTrayIcon, BookmarkIcon } from "@heroicons/react/24/outline";
+import LoadingModal from "@/components/Modals/LoadingModal";
 import DescriptionBlog from "@/components/blog/DescriptionBlog";
 import { createBlog, getBlogById, updateBlog } from "@/api/BlogAPI";
 import CreateModalBlock from "@/components/Modals/CreateModalBlock";
-import { BLOCK_TYPES, type iBlockSelect, type iBlogFormData } from "@/types/helperTypes";
+import { ArrowUpTrayIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { BLOCK_TYPES, type iBlockSelect, type iBlogFormData } from "@/types/helperTypes";
 
 export default function CreateBlogView() {
     const navigate = useNavigate();
     const { id } = useParams(); 
 
+    const [publishingLabel, setPublishingLabel] = useState("Procesando...");
+    
     const tags = useAppStore(state => state.tags);
     const blocks = useAppStore(state => state.blocks);
     const reg = useAppStore(state => state.regSelect);
@@ -59,12 +62,13 @@ export default function CreateBlogView() {
     });
 
     const handlePublish = async (published : boolean) => {
+        setPublishingLabel(published ? "Publicando tu blog..." : "Guardando tu blog...");
         const headingBlock = blocks.find(block => block.type === 'heading');
         const processedBlocks = await Promise.all(
-        blocks.map(async (block: iBlockSelect) => {
-            if ((block.type === BLOCK_TYPES.IMAGE || block.type === BLOCK_TYPES.VIDEO) && block.file) {
-            const url = await uploadImage(block.file);
-            return { ...block, value: url };
+            blocks.map(async (block: iBlockSelect) => {
+                if ((block.type === BLOCK_TYPES.IMAGE || block.type === BLOCK_TYPES.VIDEO) && block.file) {
+                const url = await uploadImage(block.file);
+                return { ...block, value: url };
             }
             return block;
         }));
@@ -89,6 +93,7 @@ export default function CreateBlogView() {
     return (
         <main className="px-4 sm:px-0">
             <CreateModalBlock />
+            <LoadingModal isOpen={isPending} message={publishingLabel} />
             <div className='max-w-5xl mx-auto pt-3 sm:pt-5'>
                 <h2 className='text-2xl sm:text-4xl font-bold text-left'>Crea tu <span className='text-[#1f387f]'>propio blog</span></h2>
                 <section className="grid grid-cols-1 sm:grid-cols-12 mt-5 gap-6 sm:gap-10">
